@@ -1,62 +1,125 @@
-import 'package:coffee_shop/colors/colors.dart';
+import 'package:coffee_shop/models/menu_item.dart';
+import 'package:coffee_shop/screens/item.dart';
 import 'package:flutter/material.dart';
-import '../models/menu_item.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-class MenuCarousel extends StatelessWidget {
-  final List<MenuItem> list;
 
-  MenuCarousel({this.list});
+class CarouselWidget extends StatefulWidget {
 
   @override
+  _CarouselWidgetState createState() => _CarouselWidgetState();
+}
+
+class _CarouselWidgetState extends State<CarouselWidget> {
+  int _currentCarousel = 1;
+
+@override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Container(
-        height: 200,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            MenuItem item = list[index];
-            return Padding(
-              padding: index == 0 ? EdgeInsets.only(left: 30.0) : EdgeInsets.only(left: 15.0),
-              child: Card(
-                elevation: 3,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Container(
-                    width: 180,
-                    height: 170,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(item.imgUrl),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                      ),
-                    ),
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        color: AppColor.white,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              Text(item.name, style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.w600, color: AppColor.black), overflow: TextOverflow.clip,),
-                              Text(item.price.toString() + '0,-', style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.w600, color: AppColor.black),)
-                            ],
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: 30.0),
+          child: CarouselSlider(
+              initialPage: 1,
+              enableInfiniteScroll: false,
+              aspectRatio: 1.0,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentCarousel = index;
+                });
+              },
+              items: klasyka.map((item) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ItemScreen(
+                            item: item,
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
+                      child: Stack(children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.only(
+                              top: 80.0, left: 10.0, right: 10.0),
+                          decoration: BoxDecoration(
+                              color: Color(0xFFEBEDEE),
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  item.name,
+                                  style: TextStyle(
+                                      color: Color(0xFF434668),
+                                      fontSize: 40.0,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.0),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Text(
+                                  item.description,
+                                  style: TextStyle(
+                                      color: Color(0xFFC1C4CD),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                            width: 400,
+                            height: 300,
+                            child: Hero(
+                              tag: item,
+                              child: Image.asset(
+                                'assets/images/coffee_cup.png',
+                                fit: BoxFit.scaleDown,
+                              )
+                            )),
+                      ]),
+                    );
+                  },
+                );
+              }).toList()),
         ),
-      ),
+        SizedBox(
+          height: 20.0,
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: klasyka.map((item) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 2.0,
+                    ),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentCarousel == klasyka.indexOf(item)
+                            ? Color(0xFFD0D1D9)
+                            : Color(0xFFE5E7E8)),
+                  );
+                },
+              );
+            }).toList()),
+      ],
     );
   }
 }

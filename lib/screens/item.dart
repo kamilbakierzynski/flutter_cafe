@@ -32,7 +32,10 @@ class _ItemState extends State<ItemScreen> {
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.4,
-            child: Image.asset('assets/images/coffee_cup.png'),
+            child: Hero(
+              tag: widget.item,
+              child: Image.asset('assets/images/coffee_cup.png'),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30.0),
