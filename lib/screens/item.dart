@@ -1,6 +1,6 @@
 import 'package:coffee_shop/models/menu_item.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import '../screens/code.dart';
 
 class ItemScreen extends StatefulWidget {
   final MenuItem item;
@@ -34,7 +34,7 @@ class _ItemState extends State<ItemScreen> {
             height: MediaQuery.of(context).size.height * 0.4,
             child: Hero(
               tag: widget.item,
-              child: Image.asset('assets/images/coffee_cup.png'),
+              child: Image.asset(widget.item.imgUrl),
             ),
           ),
           Padding(
@@ -68,85 +68,89 @@ class _ItemState extends State<ItemScreen> {
           SizedBox(
             height: 30.0,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: Container(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                'Size',
-                style: TextStyle(
-                    color: Color(0xFF434668),
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.0),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedRadio = 0;
-                    });
-                  },
+          widget.item.price.length == 1
+              ? SizedBox.shrink()
+              : Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width / 4,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
-                      border: Border.all(color: Color(0xFFD0D1D9)),
-                      color: _selectedRadio == 0
-                          ? Color(0xFFEBEDEE)
-                          : Color(0xFFF5F7F9),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'S',
-                        style: TextStyle(
-                            color: Color(0xFF434668),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.0),
-                      ),
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'Size',
+                      style: TextStyle(
+                          color: Color(0xFF434668),
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.0),
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedRadio = 1;
-                    });
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 4,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
-                      border: Border.all(color: Color(0xFFD0D1D9)),
-                      color: _selectedRadio == 1
-                          ? Color(0xFFEBEDEE)
-                          : Color(0xFFF5F7F9),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'L',
-                        style: TextStyle(
-                            color: Color(0xFF434668),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.0),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+          SizedBox(
+            height: 20.0,
           ),
+          widget.item.price.length == 1
+              ? SizedBox.shrink()
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedRadio = 0;
+                          });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 4,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(color: Color(0xFFD0D1D9)),
+                            color: _selectedRadio == 0
+                                ? Color(0xFFEBEDEE)
+                                : Color(0xFFF5F7F9),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'S',
+                              style: TextStyle(
+                                  color: Color(0xFF434668),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedRadio = 1;
+                          });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 4,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(color: Color(0xFFD0D1D9)),
+                            color: _selectedRadio == 1
+                                ? Color(0xFFEBEDEE)
+                                : Color(0xFFF5F7F9),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'L',
+                              style: TextStyle(
+                                  color: Color(0xFF434668),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17.0),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
           Expanded(
             child: SizedBox(),
           ),
@@ -166,19 +170,24 @@ class _ItemState extends State<ItemScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CodeScreen(),
+                      ),
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
                         color: Color(0xFFF09369),
                       ),
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       height: 50.0,
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            'Dodaj',
+                            'Wykorzystaj punkty',
                             style: TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 1.0,
@@ -189,7 +198,13 @@ class _ItemState extends State<ItemScreen> {
                     ),
                   ),
                   Text(
-                    widget.item.price[_selectedRadio].toString() + '0 zł',
+                    widget
+                            .item
+                            .price[widget.item.price.length > 1
+                                ? _selectedRadio
+                                : 0]
+                            .toString() +
+                        '0 zł',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25.0,

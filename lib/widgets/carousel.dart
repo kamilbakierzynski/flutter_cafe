@@ -6,12 +6,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class CarouselWidget extends StatefulWidget {
 
+  final int mode;
+
+  CarouselWidget({this.mode});
+
   @override
   _CarouselWidgetState createState() => _CarouselWidgetState();
 }
 
 class _CarouselWidgetState extends State<CarouselWidget> {
   int _currentCarousel = 1;
+
+  List<List<MenuItem>> options = [kawa, ciasto, kanapki];
 
 @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                   _currentCarousel = index;
                 });
               },
-              items: klasyka.map((item) {
+              items: options[widget.mode].map((item) {
                 return Builder(
                   builder: (BuildContext context) {
                     return GestureDetector(
@@ -85,7 +91,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                             child: Hero(
                               tag: item,
                               child: Image.asset(
-                                'assets/images/coffee_cup.png',
+                                item.imgUrl,
                                 fit: BoxFit.scaleDown,
                               )
                             )),
@@ -100,7 +106,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: klasyka.map((item) {
+            children: options[widget.mode].map((item) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
@@ -112,7 +118,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                     ),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _currentCarousel == klasyka.indexOf(item)
+                        color: _currentCarousel == options[widget.mode].indexOf(item)
                             ? Color(0xFFD0D1D9)
                             : Color(0xFFE5E7E8)),
                   );
