@@ -1,5 +1,6 @@
 import 'package:coffee_shop/screens/code.dart';
 import 'package:coffee_shop/widgets/bottom_bar/order.dart';
+import 'package:coffee_shop/widgets/loading.dart';
 import 'package:coffee_shop/widgets/snippet_card.dart';
 import 'package:coffee_shop/widgets/snippet_card_signin.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:coffee_shop/models/user.dart';
+import 'package:coffee_shop/models/menu_item.dart';
 
 class FeaturedScreen extends StatefulWidget {
   @override
@@ -23,6 +25,19 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    List<List<MenuItem>> items = [[], [], []];
+    final menuItems = Provider.of<List<MenuItem>>(context);
+    menuItems.forEach((menuItem) {
+      if (menuItem.featured) {
+        if (menuItem.category == 'klasyka' || menuItem.category == 'firmowe') {
+          items[0].add(menuItem);
+        } else if (menuItem.category == 'ciasto') {
+          items[1].add(menuItem);
+        } else if (menuItem.category == 'kanapki') {
+          items[2].add(menuItem);
+        }
+      }
+    });
 
     return Scaffold(
       backgroundColor: Color(0xFFEBECF0),
@@ -50,7 +65,7 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
                     topRight: Radius.circular(30.0))),
             child: Padding(
               padding:
-                  const EdgeInsets.only(bottom: 0.0, left: 30.0, right: 30.0),
+              const EdgeInsets.only(bottom: 0.0, left: 30.0, right: 30.0),
               child: user == null ? SnippetCardSignInWidget() : SnippetCardWidget(),
             ),
           ),
@@ -133,6 +148,7 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
             ),
             CarouselWidget(
               mode: _values.indexOf(_value),
+              options: items,
             ),
             Expanded(
               child: SizedBox(),
@@ -148,5 +164,7 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
         ),
       ),
     );
+
+
   }
 }

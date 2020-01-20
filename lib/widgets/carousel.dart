@@ -5,8 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class CarouselWidget extends StatefulWidget {
   final int mode;
+  List<List<MenuItem>> options;
 
-  CarouselWidget({this.mode});
+  CarouselWidget({this.mode, this.options});
 
   @override
   _CarouselWidgetState createState() => _CarouselWidgetState();
@@ -14,8 +15,6 @@ class CarouselWidget extends StatefulWidget {
 
 class _CarouselWidgetState extends State<CarouselWidget> {
   int _currentCarousel = 1;
-
-  List<List<MenuItem>> options = [kawa, ciasto, kanapki];
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                   _currentCarousel = index;
                 });
               },
-              items: options[widget.mode].map((item) {
+              items: widget.options[widget.mode].map((item) {
                 return Builder(
                   builder: (BuildContext context) {
                     return GestureDetector(
@@ -118,7 +117,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: options[widget.mode].map((item) {
+            children: widget.options[widget.mode].map((item) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
@@ -131,7 +130,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _currentCarousel ==
-                                options[widget.mode].indexOf(item)
+                                widget.options[widget.mode].indexOf(item)
                             ? Color(0xFFD0D1D9)
                             : Color(0xFFE5E7E8),
                         boxShadow: [

@@ -27,6 +27,7 @@ dependencies:
   provider: ^3.1.0
   flutter_spinkit: "^4.1.1"
   flare_flutter: ^2.0.1
+  qr_flutter: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
