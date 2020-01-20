@@ -3,9 +3,7 @@ import 'package:coffee_shop/screens/item.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-
 class CarouselWidget extends StatefulWidget {
-
   final int mode;
 
   CarouselWidget({this.mode});
@@ -19,16 +17,16 @@ class _CarouselWidgetState extends State<CarouselWidget> {
 
   List<List<MenuItem>> options = [kawa, ciasto, kanapki];
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 30.0),
+          padding: EdgeInsets.only(top: 10.0),
           child: CarouselSlider(
               initialPage: 1,
               enableInfiniteScroll: false,
-              aspectRatio: 1.0,
+              aspectRatio: 0.85,
               onPageChanged: (index) {
                 setState(() {
                   _currentCarousel = index;
@@ -50,10 +48,22 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.only(
-                              top: 80.0, left: 10.0, right: 10.0),
+                              top: 60.0, left: 10.0, right: 10.0, bottom: 10.0),
                           decoration: BoxDecoration(
-                              color: Color(0xFFEBEDEE),
-                              borderRadius: BorderRadius.circular(20.0)),
+                              color: Color(0xFFEBECF0),
+                              borderRadius: BorderRadius.circular(20.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4.0,
+                                    spreadRadius: 0.05,
+                                    offset: Offset(6.0, 6.0)),
+                                BoxShadow(
+                                    color: Colors.white30,
+                                    blurRadius: 4.0,
+                                    spreadRadius: 0.05,
+                                    offset: Offset(-6.0, -6.0))
+                              ]),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 20.0),
@@ -85,16 +95,18 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                             ),
                           ),
                         ),
-                        Container(
-                            width: 400,
-                            height: 300,
-                            child: Hero(
-                              tag: item,
-                              child: Image.asset(
-                                item.imgUrl,
-                                fit: BoxFit.scaleDown,
-                              )
-                            )),
+                        Positioned(
+                          left: 10, right: 10, top: -20,
+                          child: Container(
+                              width: 600,
+                              height: MediaQuery.of(context).size.width,
+                              child: Hero(
+                                  tag: item,
+                                  child: Image.asset(
+                                    item.imgUrl,
+                                    fit: BoxFit.scaleDown,
+                                  ))),
+                        ),
                       ]),
                     );
                   },
@@ -118,9 +130,22 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                     ),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _currentCarousel == options[widget.mode].indexOf(item)
+                        color: _currentCarousel ==
+                                options[widget.mode].indexOf(item)
                             ? Color(0xFFD0D1D9)
-                            : Color(0xFFE5E7E8)),
+                            : Color(0xFFE5E7E8),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 1.0,
+                              spreadRadius: 1.5,
+                              offset: Offset(0.5, 0.5)),
+                          BoxShadow(
+                              color: Colors.white70,
+                              blurRadius: 1.0,
+                              spreadRadius: 1,
+                              offset: Offset(-0.5, -0.5))
+                        ]),
                   );
                 },
               );

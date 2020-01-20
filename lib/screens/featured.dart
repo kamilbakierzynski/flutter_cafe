@@ -1,8 +1,13 @@
 import 'package:coffee_shop/screens/code.dart';
 import 'package:coffee_shop/widgets/bottom_bar/order.dart';
+import 'package:coffee_shop/widgets/snippet_card.dart';
+import 'package:coffee_shop/widgets/snippet_card_signin.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_shop/widgets/carousel.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
+import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
+import 'package:provider/provider.dart';
+import 'package:coffee_shop/models/user.dart';
 
 class FeaturedScreen extends StatefulWidget {
   @override
@@ -17,87 +22,36 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     return Scaffold(
+      backgroundColor: Color(0xFFEBECF0),
       body: SnappingSheet(
         lockOverflowDrag: true,
         snappingSheetController: _controller,
-        grabbingHeight: 90.0,
+        grabbingHeight: 60.0,
         snapPositions: [
           SnapPosition(
               positionPixel: 0.0,
               snappingCurve: Curves.elasticOut,
               snappingDuration: Duration(milliseconds: 950)),
           SnapPosition(
-              positionFactor: 0.5,
+              positionFactor: 0.7,
               snappingCurve: Curves.ease,
               snappingDuration: Duration(milliseconds: 500)),
         ],
         sheetBelow: Container(
-          color: Color(0xFFE88557),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 0.0, left: 30.0, right: 30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Twój kod dodania',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [5, 3, 2, 8, 4].map((item) {
-                    return Container(
-                      height: MediaQuery.of(context).size.width / 6,
-                      width: MediaQuery.of(context).size.width / 6,
-                      child: Card(
-                        elevation: 5,
-                        child: Center(
-                          child: Text(
-                            item.toString(),
-                            style: TextStyle(
-                              fontSize: 40.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF434668),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                Center(
-                  child: Container(
-                    child: Text(
-                      'Podaj kod podczas płatności a do twojego konta zostaną dodane punkty',
-                      style: TextStyle(
-                          color: Colors.white60,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w600),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                  '1 kawa = 1 punkt',
-                  style: TextStyle(
-                      color: Colors.white60,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600),
-                )
-              ],
+          color: Color(0xFF434668),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Color(0xFFEBECF0),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0))),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 0.0, left: 30.0, right: 30.0),
+              child: user == null ? SnippetCardSignInWidget() : SnippetCardWidget(),
             ),
           ),
         ),
@@ -106,8 +60,7 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40.0),
                 topRight: Radius.circular(40.0)),
-            border: Border.all(color: Colors.white10, width: 3.0),
-            color: Color(0xFFE88557),
+            color: Color(0xFF434668),
           ),
           width: MediaQuery.of(context).size.width,
           child: OrderWidget(),
@@ -115,58 +68,57 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 40.0, left: 23.0, right: 20.0),
+              padding: const EdgeInsets.only(left: 15.0, top: 50.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          style: TextStyle(
-                              color: Color(0xFF434668),
-                              fontSize: 45.0,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.0),
-                          elevation: 1,
-                          isDense: false,
-                          icon: Icon(Icons.keyboard_arrow_down),
-                          iconSize: 40.0,
-                          value: _value,
-                          items: _values.map((item) {
-                            return DropdownMenuItem(
-                              value: item,
-                              child: Text(
-                                item,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value;
-                            });
-                          },
+                      Text(
+                        _value,
+                        style: TextStyle(
+                          color: Color(0xFF434668),
+                          fontSize: 45.0,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.0,
                         ),
+                      ),
+                      PopupMenuButton(
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 40.0,
+                          color: Color(0xFF434668),
+                        ),
+                        elevation: 4,
+                        initialValue: _value,
+                        onSelected: (value) {
+                          setState(() {
+                            _value = value;
+                          });
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return _values.map((item) {
+                            return PopupMenuItem(
+                              child: Text(item),
+                              value: item,
+                            );
+                          }).toList();
+                        },
                       ),
                     ],
                   ),
                   IconButton(
                     icon: Icon(Icons.menu),
-                    iconSize: 40.0,
-                    color: Color(0xFF858795),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => CodeScreen(),
-                      ),
-                    ),
+                    onPressed: () =>
+                        SimpleHiddenDrawerProvider.of(context).toggle(),
+                    color: Color(0xFF434668),
+                    iconSize: 35.0,
                   )
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 25.0),
+              padding: const EdgeInsets.only(left: 17.0),
               child: Container(
                 alignment: Alignment.topLeft,
                 child: Text(
@@ -184,6 +136,13 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
             ),
             Expanded(
               child: SizedBox(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 65.0),
+              child: Icon(
+                Icons.keyboard_arrow_up,
+                color: Color(0xFFD0D1D9),
+              ),
             ),
           ],
         ),
