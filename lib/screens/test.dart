@@ -2,7 +2,6 @@ import 'package:coffee_shop/screens/auth_wrapper.dart';
 import 'package:coffee_shop/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'featured.dart';
-import 'code.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 
 class TestScreen extends StatefulWidget {

@@ -1,13 +1,8 @@
-import 'package:coffee_shop/main.dart';
-import 'package:coffee_shop/screens/register.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/shared/constants.dart';
-import 'package:coffee_shop/widgets/inner_shadow.dart';
 import 'package:coffee_shop/widgets/loading.dart';
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
-import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
-import 'package:provider/provider.dart';
-import 'package:coffee_shop/models/user.dart';
 
 class SignInCardScreen extends StatefulWidget {
   @override
@@ -177,7 +172,7 @@ class _SignInCardScreenState extends State<SignInCardScreen> {
                                   print(email);
                                   dynamic result = await _authService.signInWithEmailAndPassword(email, password);
                                   if (result == null){
-                                    print('Error');
+                                    errorDialog(context, 'Failed to sign in');
                                     setState(() {
                                       loading = false;
                                     });

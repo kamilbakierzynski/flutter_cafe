@@ -31,7 +31,8 @@ class DatabaseService {
         uid: uid ?? 'user',
         name: snapshot.data['name'] ?? 'User',
         points: snapshot.data['points'] ?? 0,
-        reedemedCoffee: snapshot.data['reedemedCoffees'] ?? 0);
+        reedemedCoffee: snapshot.data['reedemedCoffees'] ?? 0,
+        favourites: snapshot.data['favourites'] ?? []);
   }
 
   List<MenuItem> _menuItemListFromSnapshot(QuerySnapshot snapshot) {
@@ -41,6 +42,7 @@ class DatabaseService {
         name: doc.data['name'] ?? '',
         description: doc.data['description'] ?? '',
         price: doc.data['price'] ?? [],
+        size: doc.data['size'] ?? [],
         imgUrl: doc.data['imgUrl'] ?? '',
         featured: doc.data['featured'] ?? false
       );
@@ -52,20 +54,21 @@ class DatabaseService {
         .map(_menuItemListFromSnapshot);
   }
 
-//  void uploadData(List<MenuItem> menu, String name) async {
-//    final CollectionReference coffeeDataCollection =
-//    Firestore.instance.collection(name);
-//    for (var i = 0; i < menu.length; i++) {
-//      await coffeeDataCollection
-//          .document(menu[i].name)
-//          .setData({
-//        'category': menu[i].category,
-//        'name': menu[i].name,
-//        'description': menu[i].description,
-//        'price': menu[i].price,
-//        'imgUrl': menu[i].imgUrl,
-//        'featured': menu[i].featured
-//      });
-//    }
-//  }
+  void uploadData(List<MenuItem> menu, String name) async {
+    final CollectionReference coffeeDataCollection =
+    Firestore.instance.collection(name);
+    for (var i = 0; i < menu.length; i++) {
+      await coffeeDataCollection
+          .document(menu[i].name)
+          .setData({
+        'category': menu[i].category,
+        'name': menu[i].name,
+        'description': menu[i].description,
+        'price': menu[i].price,
+        'size': menu[i].size,
+        'imgUrl': menu[i].imgUrl,
+        'featured': menu[i].featured
+      });
+    }
+  }
 }

@@ -1,14 +1,8 @@
-import 'package:coffee_shop/services/database.dart';
-import 'package:coffee_shop/widgets/inner_shadow.dart';
-import 'package:coffee_shop/widgets/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'item.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
-import 'package:provider/provider.dart';
-import 'package:coffee_shop/models/user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:coffee_shop/models/menu_item.dart';
 

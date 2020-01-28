@@ -1,10 +1,8 @@
-import 'package:coffee_shop/main.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/shared/constants.dart';
-import 'package:coffee_shop/widgets/inner_shadow.dart';
 import 'package:coffee_shop/widgets/loading.dart';
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
-import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int mode;
@@ -239,6 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .registerWithEmailAndPassword(
                                           email, password, name);
                                   if (result == null) {
+                                    errorDialog(context, 'Failed to sign in');
                                     setState(() {
                                       error = 'Podaj prawidłowy adres e-mail';
                                       loading = true;

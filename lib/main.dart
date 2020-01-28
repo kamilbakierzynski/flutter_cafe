@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Coffee App',
         theme: ThemeData(
           primaryColor: Color(0xFFE9ECF5),
           accentColor: Colors.lightBlueAccent,

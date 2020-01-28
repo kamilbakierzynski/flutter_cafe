@@ -1,6 +1,5 @@
 import 'package:coffee_shop/screens/register.dart';
 import 'package:coffee_shop/screens/sign_in_card.dart';
-import 'package:coffee_shop/screens/sign_in_card_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class SnippetCardSignInWidget extends StatelessWidget {

@@ -1,17 +1,13 @@
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_shop/models/menu_item.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/services/database.dart';
-import 'package:coffee_shop/widgets/inner_shadow.dart';
 import 'package:coffee_shop/widgets/loading.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:coffee_shop/models/user.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CodeScreen extends StatefulWidget {
   @override
@@ -34,16 +30,17 @@ class _CodeScreenState extends State<CodeScreen> {
           if (snapshot.hasData) {
 //            DatabaseService(uid: user.uid).uploadData(dane, "data");
             if (_points != snapshot.data.points) {
-              _points = snapshot.data.points;
-              print(_points);
               _counter++;
               if (_counter > 1) {
                 showAnim = true;
                 Timer(Duration(seconds: 3), () {
                   setState(() {
                     showAnim = false;
+                    _points = snapshot.data.points;
                   });
                 });
+              } else {
+                _points = snapshot.data.points;
               }
             }
             return Scaffold(
@@ -210,9 +207,13 @@ class _CodeScreenState extends State<CodeScreen> {
                                               0.8,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(30),
-                                        child: Image.asset(
-                                          'assets/images/qrcode.png',
-                                          fit: BoxFit.scaleDown,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: QrImage(
+                                            data: user.uid,
+                                            version: QrVersions.auto,
+                                            foregroundColor: Color(0xFF434668),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -250,7 +251,7 @@ class _CodeScreenState extends State<CodeScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 40.0),
                                     child: Text(
-                                      'podaj swój kod podczas zamówienia, żeby wymienić punkty na kawę',
+                                      'zeskanuj kod podczas składania zamówienia, żeby wymienić punkty na kawę',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Color(0xFF434668),
@@ -312,26 +313,34 @@ class _CodeScreenState extends State<CodeScreen> {
                     ),
                   ),
                   Center(
-                    child: showAnim
-                        ? Stack(
-                            children: <Widget>[
-                              Container(
-                                height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width,
-                                color: Colors.black45,
+                      child: Stack(
+                    children: <Widget>[
+                      AnimatedContainer(
+                        height:
+                            showAnim ? MediaQuery.of(context).size.height : 0,
+                        width: MediaQuery.of(context).size.width,
+                        color: showAnim ? Colors.black87 : Colors.transparent,
+                        duration: Duration(seconds: 1),
+                        curve: Curves.fastOutSlowIn,
+                        child: showAnim
+                            ? FlareActor(
+                                'assets/images/confetti.flr',
+                                animation: 'boom',
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                      showAnim
+                          ? Container(
+                              height: showAnim ? 600 : 0,
+                              width: showAnim ? 600 : 0,
+                              child: FlareActor(
+                                'assets/images/successFast.flr',
+                                animation: 'Untitled',
                               ),
-                              Container(
-                                height: 600,
-                                width: 600,
-                                child: FlareActor(
-                                  'assets/images/successFast.flr',
-                                  animation: 'Untitled',
-                                ),
-                              ),
-                            ],
-                          )
-                        : SizedBox.shrink(),
-                  )
+                            )
+                          : SizedBox.shrink(),
+                    ],
+                  ))
                 ],
               ),
             );

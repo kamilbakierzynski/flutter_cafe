@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop/screens/sign_in.dart';
-import 'package:coffee_shop/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_shop/screens/code.dart';
 import 'package:provider/provider.dart';

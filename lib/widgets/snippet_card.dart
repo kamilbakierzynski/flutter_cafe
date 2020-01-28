@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:coffee_shop/models/user.dart';
 
 class SnippetCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<User>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -34,9 +40,13 @@ class SnippetCardWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.width * 0.65,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: Image.asset(
-              'assets/images/qrcode.png',
-              fit: BoxFit.scaleDown,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: QrImage(
+                data: user.uid,
+                version: QrVersions.auto,
+                foregroundColor: Color(0xFF434668),
+              ),
             ),
           ),
         ),

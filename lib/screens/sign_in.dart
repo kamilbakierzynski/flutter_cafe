@@ -1,11 +1,12 @@
-import 'package:coffee_shop/main.dart';
 import 'package:coffee_shop/screens/register.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/shared/constants.dart';
-import 'package:coffee_shop/widgets/inner_shadow.dart';
 import 'package:coffee_shop/widgets/loading.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
+import 'package:commons/commons.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -15,16 +16,20 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
+  final _formKeyReset = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool loading = false;
 
   // text field
 
   String email = '';
   String password = '';
+  String emailReset = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Color(0xFFEBECF0),
       body: SingleChildScrollView(
         child: Container(
@@ -174,7 +179,140 @@ class _SignInScreenState extends State<SignInScreen> {
                               )),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 0.0,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+//                                showModalBottomSheet(context: null, builder: null)
+                                showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return SingleChildScrollView(
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              bottom: MediaQuery.of(context)
+                                                  .viewInsets
+                                                  .bottom),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 20.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                          vertical: 10.0),
+                                                  child: Text(
+                                                    'Podaj adres email do zresetowania hasła',
+                                                    style: TextStyle(
+                                                      fontSize: 20.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                          vertical: 10.0),
+                                                  child: Form(
+                                                    key: _formKeyReset,
+                                                    child: TextFormField(
+                                                      validator: (val) {
+                                                        if (val.isEmpty || !val.contains('@')) {
+                                                          return 'Wprowadź poprawny adres email';
+                                                        } else {
+                                                          return null;
+                                                        }
+                                                      },
+                                                      onChanged: (val) {
+                                                        setState(() {
+                                                          emailReset = val;
+                                                        });
+                                                      },
+                                                      decoration:
+                                                          textInputDexoration
+                                                              .copyWith(
+                                                                  labelText:
+                                                                      'email'),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                          vertical: 10.0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      if (_formKeyReset.currentState.validate()){
+                                                        AuthService().resetPassword(emailReset);
+                                                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                                          content: Text('Link do resetu hasła został wysłany na adres ' + emailReset),
+                                                          duration: Duration(seconds: 4),
+                                                        ));
+                                                        Navigator.pop(context);
+                                                        emailReset = '';
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      width: MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          3,
+                                                      height: 50.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                15.0),
+                                                        color: Color(0xFFEBECF0),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                              color: Colors.black12,
+                                                              spreadRadius: 2.0,
+                                                              blurRadius: 3.0,
+                                                              offset:
+                                                                  Offset(3.0, 3.0)),
+                                                          BoxShadow(
+                                                              color: Colors.white,
+                                                              spreadRadius: 2.0,
+                                                              blurRadius: 3.0,
+                                                              offset: Offset(
+                                                                  -2.0, -2.0))
+                                                        ],
+                                                      ),
+                                                      child: Center(
+                                                          child: Text(
+                                                        'Resetuj hasło',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color(0xFF434668),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 17.0),
+                                                      )),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    });
+//                                AuthService().resetPassword(email: null)
+                              },
+                              child: Text(
+                                'Zapomniałeś hasła?',
+                                style: TextStyle(color: Color(0xFF434668)),
+                              ),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 20.0,
@@ -219,6 +357,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       loading = false;
                                     });
                                     print('Error');
+                                    errorDialog(context, 'Wystąpił błąd z logowaniem');
                                   }
                                 }
                               },

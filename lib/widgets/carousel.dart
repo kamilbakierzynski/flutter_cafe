@@ -63,36 +63,6 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                                     spreadRadius: 0.05,
                                     offset: Offset(-6.0, -6.0))
                               ]),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  item.name,
-                                  style: TextStyle(
-                                      color: Color(0xFF434668),
-                                      fontSize: 40.0,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.0),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  item.description,
-                                  style: TextStyle(
-                                      color: Color(0xFFC1C4CD),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                )
-                              ],
-                            ),
-                          ),
                         ),
                         Positioned(
                           left: 10, right: 10, top: -20,
@@ -105,6 +75,36 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                                     item.imgUrl,
                                     fit: BoxFit.scaleDown,
                                   ))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0, vertical: 30.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                item.name,
+                                style: TextStyle(
+                                    color: Color(0xFF434668),
+                                    fontSize: 40.0,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.0),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                item.description,
+                                style: TextStyle(
+                                    color: Color(0xFFC1C4CD),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              )
+                            ],
+                          ),
                         ),
                       ]),
                     );

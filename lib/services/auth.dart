@@ -13,6 +13,10 @@ class AuthService {
     return _firebaseAuth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   Future signInAnon() async {
     try {
       AuthResult result = await _firebaseAuth.signInAnonymously();

@@ -1,16 +1,9 @@
-import 'package:coffee_shop/screens/menu_inside.dart';
-import 'package:coffee_shop/services/database.dart';
-import 'package:coffee_shop/shared/items_menu.dart';
-import 'package:coffee_shop/widgets/inner_shadow.dart';
-import 'package:coffee_shop/widgets/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'item.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:provider/provider.dart';
-import 'package:coffee_shop/models/user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:coffee_shop/models/menu_item.dart';
 
@@ -36,6 +29,7 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
 
     final menuItems = Provider.of<List<MenuItem>>(context);
+
     kategorie = [];
     items = [];
     menuItems.forEach((menuItem) {
@@ -220,8 +214,9 @@ class _MenuScreenState extends State<MenuScreen> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 7.0),
+                                  horizontal: 10.0, vertical: 10.0),
                               child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 10.0),
                                 decoration: BoxDecoration(
                                     color: Color(0xFFEBECF0),
                                     boxShadow: [
@@ -252,17 +247,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                             fontWeight: FontWeight.bold,
                                             letterSpacing: 1.0),
                                       ),
-                                      IconButton(
-                                        color: Color(0xFF434668),
-                                        icon: _favourite
-                                            ? Icon(Icons.favorite)
-                                            : Icon(Icons.favorite_border),
-                                        onPressed: () {
-                                          setState(() {
-                                            _favourite = !_favourite;
-                                          });
-                                        },
-                                      )
                                     ],
                                   ),
                                 ),
