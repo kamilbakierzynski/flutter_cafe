@@ -1,7 +1,6 @@
 import 'package:coffee_shop/screens/auth_wrapper.dart';
-import 'package:coffee_shop/screens/menu.dart';
+import 'package:coffee_shop/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'featured.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 
 class TestScreen extends StatefulWidget {
@@ -18,47 +17,30 @@ class _TestScreenState extends State<TestScreen> {
         new ItemHiddenMenu(
           name: "Polecane",
           baseStyle: TextStyle(
-              color: Color(0xFF434668),
+              color: Colors.black,
               fontSize: 40.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0),
-          colorLineSelected: Color(0xFF434668),
+          colorLineSelected: Color(0xFF1E3932),
           selectedStyle: TextStyle(
-              color: Color(0xFF434668),
+              color: Color(0xFF1E3932),
               fontSize: 40.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0),
         ),
-        FeaturedScreen()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: "Menu",
-          baseStyle: TextStyle(
-              color: Color(0xFF434668),
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0),
-          colorLineSelected: Color(0xFF434668),
-          selectedStyle: TextStyle(
-              color: Color(0xFF434668),
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0),
-        ),
-        MenuScreen()));
+        HomeScreen()));
 
     items.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Karta",
           baseStyle: TextStyle(
-              color: Color(0xFF434668),
+              color: Colors.black,
               fontSize: 40.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0),
-          colorLineSelected: Color(0xFF434668),
+          colorLineSelected: Color(0xFFC52836),
           selectedStyle: TextStyle(
-              color: Color(0xFF434668),
+              color: Color(0xFFC52836),
               fontSize: 40.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0),
@@ -79,7 +61,7 @@ class _TestScreenState extends State<TestScreen> {
         size: 30.0,
       ),
       elevationAppBar: 0,
-      backgroundColorMenu: Color(0xFFEBEDEE),
+      backgroundColorMenu: Colors.white,
       screens: items,
       typeOpen: TypeOpen.FROM_RIGHT,
       isDraggable: false,

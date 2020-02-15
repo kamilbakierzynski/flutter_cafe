@@ -1,3 +1,4 @@
+import 'package:coffee_shop/models/cart.dart';
 import 'package:coffee_shop/models/menu_item.dart';
 import 'package:coffee_shop/screens/test.dart';
 import 'package:coffee_shop/services/auth.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         StreamProvider<List<MenuItem>>.value(
           value: DatabaseService().getMenuItemsData,
         ),
+        ChangeNotifierProvider(create: (context) => Cart()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
