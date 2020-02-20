@@ -46,7 +46,7 @@ class Cart with ChangeNotifier {
     int output = 0;
     cartItems.forEach((item) {
       if (item.size != "") {
-        output += 1;
+        output += item.quantity;
       }
     });
     return output;

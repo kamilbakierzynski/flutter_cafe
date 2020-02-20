@@ -3,6 +3,7 @@ import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/shared/constants.dart';
 import 'package:coffee_shop/widgets/loading.dart';
 import 'package:coffee_shop/widgets/top_nav_bar.dart';
+import 'package:coffee_shop/widgets/top_nav_bar_cart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,18 @@ import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:commons/commons.dart';
 
 class SignInScreen extends StatefulWidget {
+  bool mode;
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  _SignInScreenState createState() => _SignInScreenState(mode: mode);
+
+  SignInScreen({this.mode = false});
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  bool mode = false;
+
+  _SignInScreenState({this.mode});
+
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   final _formKeyReset = GlobalKey<FormState>();
@@ -39,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              TopNavigationBar(),
+              mode ? TopNavBarCart() : TopNavigationBar(),
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,33 +110,29 @@ class _SignInScreenState extends State<SignInScreen> {
                                     MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   TextFormField(
-                                      validator: (val) => val.isEmpty
-                                          ? 'Wpisz email'
-                                          : null,
+                                      validator: (val) =>
+                                          val.isEmpty ? 'Wpisz email' : null,
                                       onChanged: (val) {
                                         setState(() {
                                           email = val;
                                         });
                                       },
-                                      decoration:
-                                          textInputDexoration.copyWith(
-                                              labelText: 'email')),
+                                      decoration: textInputDexoration.copyWith(
+                                          labelText: 'email')),
                                   SizedBox(
                                     height: 20.0,
                                   ),
                                   TextFormField(
-                                      validator: (val) => val.isEmpty
-                                          ? 'Wpisz hasło'
-                                          : null,
+                                      validator: (val) =>
+                                          val.isEmpty ? 'Wpisz hasło' : null,
                                       onChanged: (val) {
                                         setState(() {
                                           password = val;
                                         });
                                       },
                                       obscureText: true,
-                                      decoration:
-                                          textInputDexoration.copyWith(
-                                              labelText: 'hasło')),
+                                      decoration: textInputDexoration.copyWith(
+                                          labelText: 'hasło')),
                                 ],
                               ),
                             ),
@@ -263,7 +267,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                                           child: Text(
                                                         'Resetuj hasło',
                                                         style: TextStyle(
-                                                            color: Color(0xFF243F38),
+                                                            color: Color(
+                                                                0xFF243F38),
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 17.0),

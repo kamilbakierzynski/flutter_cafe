@@ -8,7 +8,7 @@ class TopNavBarCart extends StatelessWidget {
     final Cart cart = Provider.of<Cart>(context);
 
     return Padding(
-        padding: const EdgeInsets.only(left: 10.0, top: 40.0, right: 10.0),
+        padding: const EdgeInsets.only(left: 0.0, top: 30.0, right: 0.0),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

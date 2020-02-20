@@ -1,5 +1,7 @@
 import 'package:coffee_shop/models/cart.dart';
 import 'package:coffee_shop/models/cart_item.dart';
+import 'package:coffee_shop/screens/auth_confirm_order_wrapper.dart';
+import 'package:coffee_shop/screens/confirm_order.dart';
 import 'package:coffee_shop/widgets/top_nav_bar_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -124,7 +126,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute()),
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AuthConfirmOrderWrapper())),
                         child: Container(
                           height: 60,
                           decoration: BoxDecoration(
