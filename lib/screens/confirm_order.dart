@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:toast/toast.dart';
+import 'package:slider_button/slider_button.dart';
 
 class ConfirmOrderScreen extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class ConfirmOrderScreen extends StatefulWidget {
 class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
   final formKey = new GlobalKey<FormState>();
   String _myActivity;
-  String _myActivityResult;
+  String _infoAboutOrder;
   bool _addPoints;
   bool _canPay;
 
@@ -28,7 +29,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
   void initState() {
     super.initState();
     _myActivity = '';
-    _myActivityResult = '';
+    _infoAboutOrder = '';
     _addPoints = true;
     _canPay = false;
   }
@@ -47,7 +48,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
           SlimyCard(
             color: Color(0xFFDFECE8),
             width: MediaQuery.of(context).size.width - 80,
-            topCardHeight: (MediaQuery.of(context).size.width - 80) / 2,
+            topCardHeight: 150,
             bottomCardHeight: 300,
             borderRadius: 30,
             topCardWidget: Text(
@@ -123,6 +124,22 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 4, left: 16, right: 16),
+                  child: TextFormField(
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      hintText: 'Dodaj uwagi dotyczące zamówienia',
+                    ),
+                    maxLength: 255,
+                    minLines: 1,
+                    maxLines: 5,
+                    onChanged: (value) {
+                      _infoAboutOrder = value;
+                    },
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.all(16),
                   child: DropDownFormField(
@@ -172,19 +189,48 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
             child: showBasedOnInput(user.points, cart),
           ),
-          RaisedButton(
-            child: Text(_myActivity == 'na_miejscu' ? 'Zamawiam' : 'Zapłać'),
-            onPressed: _canPay
-                ? () {
+//          RaisedButton(
+//            child: Text(_myActivity == 'na_miejscu' ? 'Zamawiam' : 'Zapłać'),
+//            onPressed: _canPay
+//                ? () {
+//                    var price = cart.sum().toStringAsFixed(2) + ' zł';
+//                    var points = cart.countStars();
+//                    if (_myActivity == 'punktami') {
+//                      price = (-cart.countStars() * 10).toString();
+//                      points = 0;
+//                    }
+//                    Future processing = DatabaseService(uid: user.uid)
+//                        .createNewOrder(user.uid, cart.cartItems, _myActivity,
+//                            price, points, _infoAboutOrder);
+//                    if (processing != null) {
+//                      Toast.show(
+//                          'Zamówienie zostało złożone. Sprawdź jego stan w zakładce Zamówienia.',
+//                          context,
+//                          duration: Toast.LENGTH_LONG,
+//                          gravity: Toast.BOTTOM);
+//                      cart.emptyCart();
+//                      var nav = Navigator.of(context);
+//                      nav.pop();
+//                      nav.pop();
+//                    }
+//                  }
+//                : null,
+//          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          _canPay
+              ? SliderButton(
+                  action: () {
                     var price = cart.sum().toStringAsFixed(2) + ' zł';
                     var points = cart.countStars();
                     if (_myActivity == 'punktami') {
-                      price = (-cart.cartItems.length * 10).toString();
+                      price = (-cart.countStars() * 10).toString();
                       points = 0;
                     }
                     Future processing = DatabaseService(uid: user.uid)
                         .createNewOrder(user.uid, cart.cartItems, _myActivity,
-                            price, points);
+                            price, points, _infoAboutOrder);
                     if (processing != null) {
                       Toast.show(
                           'Zamówienie zostało złożone. Sprawdź jego stan w zakładce Zamówienia.',
@@ -196,12 +242,28 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                       nav.pop();
                       nav.pop();
                     }
-                  }
-                : null,
-          ),
+                  },
+                  label: Text(
+                    'Przesuń, żeby zamówić',
+                    style: TextStyle(
+                        color: Color(0xff4a4a4a),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17),
+                  ),
+                  icon: Icon(
+                    Icons.payment,
+                    color: Colors.white,
+                  ),
+                  width: MediaQuery.of(context).size.width - 60,
+                  buttonColor: Color(0xFF00704A),
+                  backgroundColor: Color(0xFFDFECE8),
+                  highlightedColor: Colors.white,
+                  boxShadow: BoxShadow(color: Colors.white),
+                )
+              : SizedBox.shrink(),
           SizedBox(
             height: 50.0,
-          )
+          ),
         ],
       ),
     ));

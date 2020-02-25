@@ -122,7 +122,7 @@ class _TestScreenState extends State<TestScreen> {
       backgroundColorMenu: Colors.white,
       screens: items,
       typeOpen: TypeOpen.FROM_RIGHT,
-      isDraggable: false,
+      isDraggable: true,
       styleAutoTittleName: TextStyle(
           color: Color(0xFF434668),
           fontWeight: FontWeight.bold,

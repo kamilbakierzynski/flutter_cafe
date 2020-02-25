@@ -72,6 +72,7 @@ class DatabaseService {
           category: doc.data['category'] ?? '',
           name: doc.data['name'] ?? '',
           description: doc.data['description'] ?? '',
+          menuDescription: doc.data['menu_description'] ?? 'GORĄCE I KREMOWE',
           price: doc.data['price'] ?? [],
           size: doc.data['size'] ?? [],
           imgUrl: doc.data['imgUrl'] ?? '',
@@ -84,7 +85,7 @@ class DatabaseService {
   }
 
   Future createNewOrder(String uid, List<CartItem> items, String payment,
-      String price, int points) async {
+      String price, int points, String info) async {
     final id = shortid.generate();
     List<String> output = [];
     items.forEach((item) {
@@ -102,6 +103,7 @@ class DatabaseService {
       'time': time,
       'price': price,
       'points': points,
+      'info': info,
     });
 
     await userDataCollection

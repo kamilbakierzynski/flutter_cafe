@@ -83,6 +83,7 @@ class _CodeScreenState extends State<CodeScreen> {
                   ),
                   Container(
                     child: ListView(
+                      physics: NeverScrollableScrollPhysics(),
                       controller: _controller,
                       children: <Widget>[
                         SizedBox(
@@ -117,8 +118,7 @@ class _CodeScreenState extends State<CodeScreen> {
                               height: MediaQuery.of(context).size.height -
                                   100 -
                                   (MediaQuery.of(context).size.width - 80) /
-                                      1.5 -
-                                  92,
+                                      1.5 - 20 - 60,
                               width: 100,
                               decoration: BoxDecoration(
                                   color: Color(0xFFDFECE8),

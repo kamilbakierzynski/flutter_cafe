@@ -2,6 +2,7 @@ class MenuItem {
   final String category;
   final String name;
   final String description;
+  final String menuDescription;
   final List<dynamic> price;
   final List<dynamic> size;
   final String imgUrl;
@@ -11,6 +12,7 @@ class MenuItem {
     this.category,
     this.name,
     this.description,
+    this.menuDescription,
     this.price,
     this.size,
     this.imgUrl,

@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -37,6 +37,7 @@ dependencies:
   dropdown_formfield: ^0.1.1
   shortid: ^0.1.1
   toast: ^0.1.5
+  slider_button: ^0.4.0
 
 
 

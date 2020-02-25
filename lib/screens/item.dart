@@ -136,14 +136,14 @@ class _ItemState extends State<ItemScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.65,
+                          width: MediaQuery.of(context).size.width * 0.95,
                           child: Hero(
                             tag: widget.item,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 30.0),
+                              padding: const EdgeInsets.only(top: 30.0, left: 20),
                               child: Image.asset(
-//                              widget.item.imgUrl,
-                                "assets/images/starb2.png",
+                              widget.item.imgUrl,
+//                                "assets/images/starb2.png",
                                 fit: BoxFit.fill,
                               ),
                             ),

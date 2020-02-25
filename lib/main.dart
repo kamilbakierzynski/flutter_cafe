@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop/models/cart.dart';
 import 'package:coffee_shop/models/menu_item.dart';
 import 'package:coffee_shop/models/order.dart';
+import 'package:coffee_shop/screens/on_board_screen.dart';
 import 'package:coffee_shop/screens/test.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/services/database.dart';
@@ -37,14 +38,22 @@ class MaterialAppWithUserData extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     if (user == null) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Coffee App',
-        theme: ThemeData(
-          primaryColor: Color(0xFFE9ECF5),
-          accentColor: Colors.lightBlueAccent,
+      return GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Coffee App',
+          theme: ThemeData(
+            primaryColor: Color(0xFFE9ECF5),
+            accentColor: Colors.lightBlueAccent,
+          ),
+          home: OnBoardScreen(),
         ),
-        home: TestScreen(),
       );
     }
     return MultiProvider(
@@ -54,15 +63,25 @@ class MaterialAppWithUserData extends StatelessWidget {
         StreamProvider<List<UserOrder>>.value(
             value: DatabaseService(uid: user.uid).userOrders),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Coffee App',
-        theme: ThemeData(
-          primaryColor: Color(0xFFE9ECF5),
-          accentColor: Colors.lightBlueAccent,
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Coffee App',
+          theme: ThemeData(
+            primaryColor: Color(0xFFE9ECF5),
+            accentColor: Colors.lightBlueAccent,
+          ),
+          home: OnBoardScreen(),
         ),
-        home: TestScreen(),
       ),
     );
   }
 }
+
+

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:coffee_shop/models/cart.dart';
 import 'package:coffee_shop/models/cart_item.dart';
 import 'package:coffee_shop/models/menu_item.dart';
@@ -81,35 +82,47 @@ class MenuListItem extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text(
-                                            'GORĄCE I KREMOWE',
-                                            style: TextStyle(
-                                                color: complementaryColor,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: 1.5),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width - 170,
+                                            child: AutoSizeText(
+                                              item.menuDescription,
+                                              style: TextStyle(
+                                                  color: complementaryColor,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: 1.5),
+                                              maxLines: 1,
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 4.0,
                                           ),
-                                          Text(
-                                            item.name,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: 1.0),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width - 170,
+                                            child: AutoSizeText(
+                                              item.name,
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: 1.0),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                        item.price[0].toStringAsFixed(2) +
-                                            ' zł',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24.0,
-                                            fontWeight: FontWeight.w900,
-                                            letterSpacing: 0.3),
+                                      SizedBox(
+                                        width: (MediaQuery.of(context).size.width - 170) /2,
+                                        child: AutoSizeText(
+                                          item.price[0].toStringAsFixed(2) +
+                                              ' zł',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24.0,
+                                              fontWeight: FontWeight.w900,
+                                              letterSpacing: 0.3),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -178,7 +191,7 @@ class MenuListItem extends StatelessWidget {
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 200, top: 60),
+                padding: const EdgeInsets.only(left: 200, top: 75),
                 child: Container(
                   height: 240,
                   width: 240,

@@ -152,6 +152,9 @@ class OrdersScreen extends StatelessWidget {
                                       child: Container(
                                         child: ListView.builder(
                                             shrinkWrap: true,
+                                            physics: order.order.length < 5
+                                                ? NeverScrollableScrollPhysics()
+                                                : ClampingScrollPhysics(),
                                             itemCount: order.order.length,
                                             itemBuilder: (context, index) {
                                               final String orderItem =
@@ -261,7 +264,14 @@ class OrdersScreen extends StatelessWidget {
                                                   order.customer);
                                             });
                                       },
-                                      child: Text('Odbierz'),
+                                      child: SizedBox(
+                                        height: 30,
+                                        width: 30,
+                                        child: Image.asset(
+                                          'assets/images/qrCodeIcon.png',
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
