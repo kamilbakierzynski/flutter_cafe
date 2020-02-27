@@ -1,4 +1,4 @@
-import 'package:coffee_shop/services/auth.dart';
+import 'package:coffee_shop/services/auth_service.dart';
 import 'package:coffee_shop/shared/constants.dart';
 import 'package:coffee_shop/widgets/loading.dart';
 import 'package:commons/commons.dart';
@@ -145,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             name = val;
                                           });
                                         },
-                                        decoration: textInputDexoration.copyWith(labelText: 'imię')
+                                        decoration: textInputDecoration.copyWith(labelText: 'imię')
                                       ),
                                       SizedBox(
                                         height: 20.0,
@@ -158,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             email = val;
                                           });
                                         },
-                                        decoration: textInputDexoration.copyWith(labelText: 'email')
+                                        decoration: textInputDecoration.copyWith(labelText: 'email')
                                       ),
                                       SizedBox(
                                         height: 20.0,
@@ -173,7 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           });
                                         },
                                         obscureText: true,
-                                        decoration: textInputDexoration.copyWith(labelText: 'hasło')
+                                        decoration: textInputDecoration.copyWith(labelText: 'hasło')
                                       ),
                                       SizedBox(
                                         height: 20.0,
@@ -188,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           });
                                         },
                                         obscureText: true,
-                                        decoration: textInputDexoration.copyWith(labelText: 'powtórz hasło')
+                                        decoration: textInputDecoration.copyWith(labelText: 'powtórz hasło')
                                       ),
                                     ],
                                   ),

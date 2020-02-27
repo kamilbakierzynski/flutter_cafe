@@ -1,5 +1,5 @@
-import 'package:coffee_shop/models/user.dart';
-import 'package:coffee_shop/services/database.dart';
+import 'package:coffee_shop/models/user_model.dart';
+import 'package:coffee_shop/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {

@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:coffee_shop/models/cart.dart';
-import 'package:coffee_shop/models/cart_item.dart';
-import 'package:coffee_shop/models/menu_item.dart';
+import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/models/cart_item_model.dart';
+import 'package:coffee_shop/models/menu_item_model.dart';
 import 'package:coffee_shop/screens/cart_screen.dart';
-import 'package:coffee_shop/screens/item.dart';
-import 'package:coffee_shop/widgets/more_info.dart';
+import 'package:coffee_shop/screens/item_screen.dart';
+import 'package:coffee_shop/widgets/more_info_bottom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -83,7 +83,10 @@ class MenuListItem extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           SizedBox(
-                                            width: MediaQuery.of(context).size.width - 170,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                170,
                                             child: AutoSizeText(
                                               item.menuDescription,
                                               style: TextStyle(
@@ -98,7 +101,10 @@ class MenuListItem extends StatelessWidget {
                                             height: 4.0,
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context).size.width - 170,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                170,
                                             child: AutoSizeText(
                                               item.name,
                                               maxLines: 1,
@@ -112,7 +118,10 @@ class MenuListItem extends StatelessWidget {
                                         ],
                                       ),
                                       SizedBox(
-                                        width: (MediaQuery.of(context).size.width - 170) /2,
+                                        width:
+                                            (MediaQuery.of(context).size.width -
+                                                    170) /
+                                                2,
                                         child: AutoSizeText(
                                           item.price[0].toStringAsFixed(2) +
                                               ' zł',
@@ -200,7 +209,26 @@ class MenuListItem extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                   ),
                 ),
-              )
+              ),
+              1 < 0
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 200),
+                      child: Container(
+                        height: 25,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0))),
+                        child: Center(
+                            child: Text(
+                          'NOWOSC',
+                          style: TextStyle(color: backgroundColor),
+                        )),
+                      ),
+                    )
+                  : SizedBox.shrink()
             ],
           )),
     );

@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_shop/models/user.dart';
-import 'package:coffee_shop/screens/auth_orders_wrapper.dart';
-import 'package:coffee_shop/screens/auth_wrapper.dart';
-import 'package:coffee_shop/screens/home.dart';
+import 'package:coffee_shop/models/user_model.dart';
+import 'package:coffee_shop/wrappers/auth_orders_wrapper.dart';
+import 'package:coffee_shop/wrappers/auth_wrapper.dart';
+import 'package:coffee_shop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:provider/provider.dart';
 
-class TestScreen extends StatefulWidget {
+class NavigationMenu extends StatefulWidget {
   @override
-  _TestScreenState createState() => _TestScreenState();
+  _NavigationMenuState createState() => _NavigationMenuState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class _NavigationMenuState extends State<NavigationMenu> {
   List<ScreenHiddenDrawer> items = new List();
 
   @override

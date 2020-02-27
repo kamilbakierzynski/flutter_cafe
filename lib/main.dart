@@ -1,16 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_shop/models/cart.dart';
-import 'package:coffee_shop/models/menu_item.dart';
-import 'package:coffee_shop/models/order.dart';
+import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/models/menu_item_model.dart';
+import 'package:coffee_shop/models/user_order_model.dart';
 import 'package:coffee_shop/screens/on_board_screen.dart';
-import 'package:coffee_shop/screens/test.dart';
-import 'package:coffee_shop/services/auth.dart';
-import 'package:coffee_shop/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:coffee_shop/services/auth_service.dart';
+import 'package:coffee_shop/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'models/user.dart';
+import 'models/user_model.dart';
 
 void main() => runApp(MyApp());
 

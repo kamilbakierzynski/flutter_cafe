@@ -1,4 +1,4 @@
-import 'package:coffee_shop/models/cart.dart';
+import 'package:coffee_shop/models/cart_model.dart';
 import 'package:coffee_shop/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';

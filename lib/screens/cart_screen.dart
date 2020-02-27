@@ -1,8 +1,8 @@
-import 'package:coffee_shop/models/cart.dart';
-import 'package:coffee_shop/models/cart_item.dart';
-import 'package:coffee_shop/screens/auth_confirm_order_wrapper.dart';
-import 'package:coffee_shop/screens/confirm_order.dart';
-import 'package:coffee_shop/widgets/top_nav_bar_cart.dart';
+import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/models/cart_item_model.dart';
+import 'package:coffee_shop/shared/colors.dart';
+import 'package:coffee_shop/wrappers/auth_confirm_order_wrapper.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/top_nav_bar_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -82,7 +82,7 @@ class _CartScreenState extends State<CartScreen> {
                                   onPressed: () {
                                     cart.delete(index);
                                   },
-                                  color: Color(0xFFC52836),
+                                  color: AppColors.red,
                                 ),
                               ],
                             ),

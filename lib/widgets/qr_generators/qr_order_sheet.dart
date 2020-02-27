@@ -1,4 +1,4 @@
-import 'package:coffee_shop/widgets/qr_code_user.dart';
+import 'package:coffee_shop/widgets/qr_generators/qr_code_user.dart';
 import 'package:flutter/material.dart';
 
 class QrCodeSheetWidget extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_shop/models/user.dart';
-import 'package:coffee_shop/models/menu_item.dart';
-import 'package:coffee_shop/models/cart_item.dart';
-import 'package:coffee_shop/models/order.dart';
+import 'package:coffee_shop/models/user_model.dart';
+import 'package:coffee_shop/models/menu_item_model.dart';
+import 'package:coffee_shop/models/cart_item_model.dart';
+import 'package:coffee_shop/models/user_order_model.dart';
 import 'package:shortid/shortid.dart';
 
 class DatabaseService {

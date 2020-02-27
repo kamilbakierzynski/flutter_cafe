@@ -1,4 +1,4 @@
-import 'package:coffee_shop/models/cart.dart';
+import 'package:coffee_shop/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

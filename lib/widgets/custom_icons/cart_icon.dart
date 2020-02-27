@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coffee_shop/models/cart.dart';
+import 'package:coffee_shop/models/cart_model.dart';
 import 'package:coffee_shop/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 

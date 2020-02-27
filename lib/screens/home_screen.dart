@@ -1,17 +1,13 @@
-import 'package:coffee_shop/models/cart.dart';
-import 'package:coffee_shop/models/cart_item.dart';
-import 'package:coffee_shop/screens/cart_screen.dart';
-import 'package:coffee_shop/screens/item.dart';
-import 'package:coffee_shop/widgets/custom_app_bar.dart';
-import 'package:coffee_shop/widgets/disable_list_glow.dart';
+import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/shared/colors.dart';
+import 'package:coffee_shop/shared/data.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/custom_app_bar.dart';
+import 'package:coffee_shop/utils/disable_list_glow.dart';
 import 'package:coffee_shop/widgets/loading.dart';
 import 'package:coffee_shop/widgets/menu_list_item.dart';
-import 'package:coffee_shop/widgets/more_info.dart';
-import 'package:coffee_shop/widgets/top_nav_bar.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
-import 'package:coffee_shop/models/menu_item.dart';
+import 'package:coffee_shop/models/menu_item_model.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,25 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> menuCategories = [
-    'Smaki dnia',
-    'Firmowe',
-    'Klasyka',
-    'Kanapki',
-    'Ciasta'
-  ];
-  int selectedCategory = 0;
 
-  List<Color> listColors = [
-    Color(0xFF1E3932),
-    Color(0xFFC52836),
-    Color(0xFF00704A)
-  ];
-  List<Color> complementaryListColors = [
-    Color(0xFF068F60),
-    Color(0xFFE67B96),
-    Color(0xFF7ECCB8)
-  ];
+  int selectedCategory = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       MenuItem item = selectedList[index];
                       return Padding(
                         padding: const EdgeInsets.only(left: 60.0, top: 20.0),
-                        child: MenuListItem(item, listColors[index % 3],
-                            complementaryListColors[index % 3]),
+                        child: MenuListItem(item, AppColors.homeScreenListColors[index % AppColors.homeScreenListColors.length],
+                            AppColors.homeScreenComplementaryListColors[index % AppColors.homeScreenComplementaryListColors.length]),
                       );
                     },
                     childCount: items[selectedCategory].length,
@@ -139,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
-                                              menuCategories[index],
+                                              AppData.menuCategories[index],
                                               style: selectedCategory == index
                                                   ? TextStyle(
                                                       color: Color(0xFF00704A),
@@ -172,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )),
                                 ),
                               );
-                            }, childCount: menuCategories.length),
+                            }, childCount: AppData.menuCategories.length),
                           )
                         ],
                       ),
@@ -180,86 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-//              Padding(
-//                padding: const EdgeInsets.only(top: 220.0),
-//                child: ClipRRect(
-//                  borderRadius: BorderRadius.only(
-//                    topRight: Radius.circular(55.0),
-//                  ),
-//                  child: Container(
-//                    width: 60,
-//                    decoration: BoxDecoration(
-//                      color: Color(0xFFE0EDE9),
-//                      borderRadius: BorderRadius.only(
-//                        topRight: Radius.circular(55.0),
-//                      ),
-//                    ),
-//                    child: ListView.builder(
-//                        itemCount: menuCategories.length,
-//                        itemBuilder:
-//                            (BuildContext ctxt, int index) {
-//                          return Padding(
-//                            padding: const EdgeInsets.only(
-//                                bottom: 60.0, top: 20.0),
-//                            child: Center(
-//                                child: GestureDetector(
-//                                  onTap: () {
-//                                    setState(() {
-//                                      selectedCategory = index;
-//                                    });
-//                                  },
-//                                  child: RotatedBox(
-//                                      quarterTurns: 3,
-//                                      child: Column(
-//                                        mainAxisAlignment:
-//                                        MainAxisAlignment.center,
-//                                        children: <Widget>[
-//                                          Text(
-//                                            menuCategories[index],
-//                                            style: selectedCategory ==
-//                                                index
-//                                                ? TextStyle(
-//                                                color: Color(
-//                                                    0xFF00704A),
-//                                                fontWeight:
-//                                                FontWeight
-//                                                    .w700,
-//                                                fontSize: 15.0)
-//                                                : TextStyle(
-//                                                color: Color(
-//                                                    0xFF00704A),
-//                                                fontWeight:
-//                                                FontWeight
-//                                                    .w400,
-//                                                fontSize: 14.0),
-//                                          ),
-//                                          SizedBox(
-//                                            height: 2.0,
-//                                          ),
-//                                          selectedCategory == index
-//                                              ? Container(
-//                                            width: 7.0,
-//                                            height: 7.0,
-//                                            decoration: BoxDecoration(
-//                                                color: Color(
-//                                                    0xFF00704A),
-//                                                borderRadius:
-//                                                BorderRadius
-//                                                    .circular(
-//                                                    10.0)),
-//                                          )
-//                                              : Container(
-//                                            width: 7,
-//                                            height: 7,
-//                                          )
-//                                        ],
-//                                      )),
-//                                )),
-//                          );
-//                        }),
-//                  ),
-//                ),
-//              ),
             ],
           ));
     }

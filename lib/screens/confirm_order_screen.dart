@@ -1,8 +1,9 @@
-import 'package:coffee_shop/models/cart.dart';
-import 'package:coffee_shop/models/cart_item.dart';
-import 'package:coffee_shop/models/user.dart';
-import 'package:coffee_shop/services/database.dart';
-import 'package:coffee_shop/widgets/top_nav_bar_cart.dart';
+import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/models/cart_item_model.dart';
+import 'package:coffee_shop/models/user_model.dart';
+import 'package:coffee_shop/services/database_service.dart';
+import 'package:coffee_shop/shared/colors.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/top_nav_bar_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
@@ -105,7 +106,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                 ),
                 Icon(
                   Icons.favorite,
-                  color: Color(0xFFC52836),
+                  color: AppColors.red,
                 )
               ],
             ),

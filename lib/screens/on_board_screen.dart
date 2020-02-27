@@ -1,5 +1,5 @@
-import 'package:coffee_shop/models/on_board_slider.dart';
-import 'package:coffee_shop/screens/test.dart';
+import 'package:coffee_shop/models/on_board_slider_model.dart';
+import 'package:coffee_shop/screens/navigation_menu.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardScreen extends StatefulWidget {
@@ -91,7 +91,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 },
                 child: Text('DALEJ',
                     style: TextStyle(
-                        color: Colors.grey[700],
+                        color: Color(0xFF428bca),
                         fontSize: 13.0,
                         fontWeight: FontWeight.w600)),
               )
@@ -104,16 +104,16 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (_) => TestScreen(),
+                builder: (_) => NavigationMenu(),
               ),
             ),
         child: Container(
           height: 60,
-          color: Colors.grey[200],
+          color: Color(0xFF428bca),
           child: Center(
               child: Text('URUCHOM',
                   style: TextStyle(
-                      color: Colors.grey[700],
+                      color: Colors.white,
                       fontSize: 13.0,
                       fontWeight: FontWeight.w600))),
         ),

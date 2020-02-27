@@ -1,9 +1,9 @@
-import 'package:coffee_shop/widgets/custom_orders_bar.dart';
-import 'package:coffee_shop/widgets/qr_order_sheet.dart';
-import 'package:coffee_shop/widgets/top_nav_bar.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/custom_orders_bar.dart';
+import 'package:coffee_shop/widgets/qr_generators/qr_order_sheet.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/top_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:coffee_shop/models/order.dart';
+import 'package:coffee_shop/models/user_order_model.dart';
 
 class OrdersScreen extends StatelessWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:coffee_shop/models/cart_item.dart';
+import 'package:coffee_shop/models/cart_item_model.dart';
 import 'package:flutter/foundation.dart';
 
 class Cart with ChangeNotifier {

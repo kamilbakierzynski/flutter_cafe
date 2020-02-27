@@ -1,4 +1,4 @@
-import 'package:coffee_shop/widgets/cart_icon.dart';
+import 'package:coffee_shop/widgets/custom_icons/cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 

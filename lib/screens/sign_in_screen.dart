@@ -1,13 +1,11 @@
-import 'package:coffee_shop/screens/register.dart';
-import 'package:coffee_shop/services/auth.dart';
+import 'package:coffee_shop/screens/register_screen.dart';
+import 'package:coffee_shop/services/auth_service.dart';
 import 'package:coffee_shop/shared/constants.dart';
 import 'package:coffee_shop/widgets/loading.dart';
-import 'package:coffee_shop/widgets/top_nav_bar.dart';
-import 'package:coffee_shop/widgets/top_nav_bar_cart.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/top_nav_bar.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/top_nav_bar_cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:commons/commons.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -117,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                           email = val;
                                         });
                                       },
-                                      decoration: textInputDexoration.copyWith(
+                                      decoration: textInputDecoration.copyWith(
                                           labelText: 'email')),
                                   SizedBox(
                                     height: 20.0,
@@ -131,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                         });
                                       },
                                       obscureText: true,
-                                      decoration: textInputDexoration.copyWith(
+                                      decoration: textInputDecoration.copyWith(
                                           labelText: 'hasło')),
                                 ],
                               ),
@@ -200,7 +198,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                                         });
                                                       },
                                                       decoration:
-                                                          textInputDexoration
+                                                          textInputDecoration
                                                               .copyWith(
                                                                   labelText:
                                                                       'email'),

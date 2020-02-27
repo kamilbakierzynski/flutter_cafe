@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:coffee_shop/models/cart.dart';
-import 'package:coffee_shop/models/cart_item.dart';
-import 'package:coffee_shop/models/menu_item.dart';
-import 'package:coffee_shop/widgets/animated_count.dart';
-import 'package:coffee_shop/widgets/more_info.dart';
-import 'package:coffee_shop/widgets/negative_radius.dart';
-import 'package:commons/commons.dart';
+import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/models/cart_item_model.dart';
+import 'package:coffee_shop/models/menu_item_model.dart';
+import 'package:coffee_shop/shared/data.dart';
+import 'package:coffee_shop/widgets/animations/animated_count.dart';
+import 'package:coffee_shop/widgets/more_info_bottom_card.dart';
+import 'package:coffee_shop/utils/negative_radius_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,19 +20,10 @@ class ItemScreen extends StatefulWidget {
 }
 
 class _ItemState extends State<ItemScreen> {
-  List<String> sizes = ['M', 'L'];
-  String dropdownSize = 'M';
+  String dropdownSize = AppData.sizes.first;
   int dropdownSizeIndex = 0;
 
-  List<String> milks = [
-    'Krowie',
-    'Bez laktozy',
-    'Sojowe',
-    'Owsiane',
-    'Kokosowe'
-  ];
-  String dropdownMilk = 'Krowie';
-  List<double> milkPrices = [0.0, 0.0, 1.5, 1.5, 2.0];
+  String dropdownMilk = AppData.milks.first;
   int dropdownMilkIndex = 0;
 
   int counter = 1;
@@ -58,7 +49,7 @@ class _ItemState extends State<ItemScreen> {
     final Cart cart = Provider.of<Cart>(context);
 
     price = widget.item.price[dropdownSizeIndex];
-    calculatedPrice = (price + milkPrices[dropdownMilkIndex]) * counter;
+    calculatedPrice = (price + AppData.milkPrices[dropdownMilkIndex]) * counter;
     return Scaffold(
       backgroundColor: Color(0xFFFBFAFB),
       body: Column(
@@ -292,10 +283,10 @@ class _ItemState extends State<ItemScreen> {
                                             setState(() {
                                               dropdownSize = value;
                                               dropdownSizeIndex =
-                                                  sizes.indexOf(value);
+                                                  AppData.sizes.indexOf(value);
                                             });
                                           },
-                                          items: sizes
+                                          items: AppData.sizes
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
                                             return DropdownMenuItem<String>(
@@ -341,10 +332,10 @@ class _ItemState extends State<ItemScreen> {
                                             setState(() {
                                               dropdownMilk = value;
                                               dropdownMilkIndex =
-                                                  milks.indexOf(value);
+                                                  AppData.milks.indexOf(value);
                                             });
                                           },
-                                          items: milks
+                                          items: AppData.milks
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
                                             return DropdownMenuItem<String>(

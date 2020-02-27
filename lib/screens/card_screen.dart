@@ -1,14 +1,15 @@
 import 'dart:async';
-import 'package:coffee_shop/services/auth.dart';
-import 'package:coffee_shop/services/database.dart';
-import 'package:coffee_shop/widgets/add_points_anim.dart';
+import 'package:coffee_shop/services/auth_service.dart';
+import 'package:coffee_shop/services/database_service.dart';
+import 'package:coffee_shop/shared/colors.dart';
+import 'package:coffee_shop/widgets/animations/add_points_anim.dart';
 import 'package:coffee_shop/widgets/loading.dart';
 import 'package:coffee_shop/widgets/points_card.dart';
-import 'package:coffee_shop/widgets/qr_code_user.dart';
-import 'package:coffee_shop/widgets/top_nav_bar.dart';
+import 'package:coffee_shop/widgets/qr_generators/qr_code_user.dart';
+import 'package:coffee_shop/widgets/nav_app_bars/top_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:coffee_shop/models/user.dart';
+import 'package:coffee_shop/models/user_model.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class CodeScreen extends StatefulWidget {
@@ -118,7 +119,9 @@ class _CodeScreenState extends State<CodeScreen> {
                               height: MediaQuery.of(context).size.height -
                                   100 -
                                   (MediaQuery.of(context).size.width - 80) /
-                                      1.5 - 20 - 60,
+                                      1.5 -
+                                  20 -
+                                  60,
                               width: 100,
                               decoration: BoxDecoration(
                                   color: Color(0xFFDFECE8),
@@ -146,14 +149,22 @@ class _CodeScreenState extends State<CodeScreen> {
                                                   await _authService.signOut();
                                                 },
                                                 child: Card(
-                                                  elevation: 5,
+                                                    elevation: 5,
                                                     child: Padding(
                                                         padding:
-                                                            const EdgeInsets.all(
-                                                                10.0),
+                                                            const EdgeInsets
+                                                                .all(10.0),
                                                         child: Center(
                                                             child: Text(
-                                                                'Wyloguj się', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.blueGrey),)))),
+                                                          'Wyloguj się',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                              fontSize: 20.0,
+                                                              color: Colors
+                                                                  .blueGrey),
+                                                        )))),
                                               )));
                                     } else {
                                       return Padding(
@@ -212,8 +223,7 @@ class _CodeScreenState extends State<CodeScreen> {
                                                             ),
                                                             Icon(
                                                               Icons.favorite,
-                                                              color: Color(
-                                                                  0xFFC52836),
+                                                              color: AppColors.red,
                                                               size: 20.0,
                                                             ),
                                                           ],
@@ -251,8 +261,7 @@ class _CodeScreenState extends State<CodeScreen> {
                                                                 45),
                                                         height: 20,
                                                         decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xFFC52836),
+                                                            color: AppColors.red,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
