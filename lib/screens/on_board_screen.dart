@@ -1,5 +1,6 @@
 import 'package:coffee_shop/models/on_board_slider_model.dart';
 import 'package:coffee_shop/screens/navigation_menu.dart';
+import 'package:coffee_shop/services/first_open_checker.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardScreen extends StatefulWidget {
@@ -19,17 +20,17 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
           imagePath: "assets/images/menu_tab.png",
           title: 'Kawy i nie tylko',
           desc:
-          'Przeglądaj wszystkie pyszności jakie oferujemy i znajdź coś dla siebie'),
+              'Przeglądaj wszystkie pyszności jakie oferujemy i znajdź coś dla siebie'),
       OnBoardSlider(
           imagePath: "assets/images/card_tab.png",
           title: 'Magiczna karta',
           desc:
-          'Zbieraj punkty na kartę, którą masz zawsze przy sobie i wymieniaj na darmowe kawy!'),
+              'Zbieraj punkty na kartę, którą masz zawsze przy sobie i wymieniaj na darmowe kawy!'),
       OnBoardSlider(
           imagePath: "assets/images/order_tab.png",
           title: 'Niech czeka...',
           desc:
-          'Potrzebujesz kawy ale masz mało czasu?\nZamów przez aplikację i odbierz na miejscu.'),
+              'Potrzebujesz kawy ale masz mało czasu?\nZamów przez aplikację i odbierz na miejscu.'),
     ];
     super.initState();
   }
@@ -56,68 +57,72 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
           }),
       bottomSheet: _currentIndex != slides.length - 1
           ? Container(
-        height: 60,
-        color: Colors.grey[200],
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  _pageController.animateToPage(
-                      slides.length - 1, duration: Duration(milliseconds: 400), curve: Curves.easeInOut);
-                },
-                child: Text(
-                  'POMIŃ',
-                  style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.w600),
+              height: 60,
+              color: Colors.grey[200],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        _pageController.animateToPage(slides.length - 1,
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInOut);
+                      },
+                      child: Text(
+                        'POMIŃ',
+                        style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        for (int i = 0; i < slides.length; i++)
+                          _currentIndex == i
+                              ? pageIndexIndicator(true)
+                              : pageIndexIndicator(false)
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _pageController.animateToPage(_currentIndex + 1,
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInOut);
+                      },
+                      child: Text('DALEJ',
+                          style: TextStyle(
+                              color: Color(0xFF428bca),
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.w600)),
+                    )
+                  ],
                 ),
               ),
-              Row(
-                children: <Widget>[
-                  for (int i = 0; i < slides.length; i++)
-                    _currentIndex == i
-                        ? pageIndexIndicator(true)
-                        : pageIndexIndicator(false)
-                ],
-              ),
-              GestureDetector(
-                onTap: () {
-                  _pageController.animateToPage(
-                      _currentIndex + 1, duration: Duration(milliseconds: 400), curve: Curves.easeInOut);
-                },
-                child: Text('DALEJ',
-                    style: TextStyle(
-                        color: Color(0xFF428bca),
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.w600)),
-              )
-            ],
-          ),
-        ),
-      )
+            )
           : GestureDetector(
-        onTap: () =>
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => NavigationMenu(),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => NavigationMenu(),
+                  ),
+                );
+                FirstOpenChecker().saveFirstOpen();
+              },
+              child: Container(
+                height: 60,
+                color: Color(0xFF428bca),
+                child: Center(
+                    child: Text('URUCHOM',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w600))),
               ),
             ),
-        child: Container(
-          height: 60,
-          color: Color(0xFF428bca),
-          child: Center(
-              child: Text('URUCHOM',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.w600))),
-        ),
-      ),
     );
   }
 
@@ -151,10 +156,7 @@ class SliderTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: Image.asset(
                   imageAssetPath,
                   fit: BoxFit.fitHeight,

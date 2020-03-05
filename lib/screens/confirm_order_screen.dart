@@ -1,4 +1,5 @@
 import 'package:coffee_shop/models/cart_model.dart';
+import 'package:coffee_shop/models/menu_item_model.dart';
 import 'package:coffee_shop/models/cart_item_model.dart';
 import 'package:coffee_shop/models/user_model.dart';
 import 'package:coffee_shop/services/database_service.dart';
@@ -40,233 +41,262 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
     final Cart cart = Provider.of<Cart>(context);
     final List<CartItem> cartList = cart.cartItems;
     final UserData user = Provider.of<UserData>(context);
+    final List<MenuItem> menuItems = Provider.of<List<MenuItem>>(context);
 
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          TopNavBarCart(),
-          SlimyCard(
-            color: Color(0xFFDFECE8),
-            width: MediaQuery.of(context).size.width - 80,
-            topCardHeight: 150,
-            bottomCardHeight: 300,
-            borderRadius: 30,
-            topCardWidget: Text(
-              cart.sum().toStringAsFixed(2) + " zł",
-              style: TextStyle(
-                  color: Color(0xFF00704A),
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w900),
-            ),
-            bottomCardWidget: Container(
-              child: ListView.builder(
-                  itemCount: cartList.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    CartItem item = cartList[index];
-                    return Center(
-                      child: ListTile(
-                        title: Text(
-                          item.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 20.0),
-                        ),
-                        subtitle: item.size == ""
-                            ? null
-                            : Text("${item.size}  ${item.milk}"),
-                        leading: Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xFF00704A),
-                                borderRadius: BorderRadius.circular(30.0)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "${item.quantity}x",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            )),
-                      ),
-                    );
-                  }),
-            ),
-            slimeEnabled: true,
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Za zamówienie otrzymasz:  ${_addPoints ? cart.countStars() : "0"}',
-                  textAlign: TextAlign.justify,
-                  style: textStyle,
-                ),
-                Icon(
-                  Icons.favorite,
-                  color: AppColors.red,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: Text(
-              'Aktualnie płatność możliwa jest za pomocą zebranych punktów lub przy płatności na miejscu.',
-              textAlign: TextAlign.justify,
-              style: textStyle,
-            ),
-          ),
-          Form(
-            key: formKey,
+        body: Column(
+      children: <Widget>[
+        TopNavBarCart(),
+        Container(
+          height: MediaQuery.of(context).size.height - 78,
+          child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                SlimyCard(
+                  color: Color(0xFFDFECE8),
+                  width: MediaQuery.of(context).size.width - 80,
+                  topCardHeight: 150,
+                  bottomCardHeight: 300,
+                  borderRadius: 30,
+                  topCardWidget: Text(
+                    cart.sum().toStringAsFixed(2) + " zł",
+                    style: TextStyle(
+                        color: Color(0xFF00704A),
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w900),
+                  ),
+                  bottomCardWidget: Container(
+                    child: ListView.builder(
+                        itemCount: cartList.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          CartItem item = cartList[index];
+                          return Center(
+                            child: ListTile(
+                              title: Text(
+                                item.name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20.0),
+                              ),
+                              subtitle: item.size == ""
+                                  ? null
+                                  : Text("${item.size}  ${item.milk}"),
+                              leading: Container(
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF00704A),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      "${item.quantity}x",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  )),
+                            ),
+                          );
+                        }),
+                  ),
+                  slimeEnabled: true,
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 4, left: 16, right: 16),
-                  child: TextFormField(
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      hintText: 'Dodaj uwagi dotyczące zamówienia',
-                    ),
-                    maxLength: 255,
-                    minLines: 1,
-                    maxLines: 5,
-                    onChanged: (value) {
-                      _infoAboutOrder = value;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: DropDownFormField(
-                    titleText: 'Płatność',
-                    hintText:
-                        _myActivity == '' ? 'Proszę wybrać jedną' : _myActivity,
-                    value: _myActivity,
-                    onSaved: (value) {
-                      setState(() {
-                        _myActivity = value;
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _myActivity = value;
-                      });
-                      if (value == 'punktami') {
-                        setState(() {
-                          _addPoints = false;
-                        });
-                      }
-                      if (value == 'na_miejscu') {
-                        setState(() {
-                          _addPoints = true;
-                          _canPay = true;
-                        });
-                      }
-                    },
-                    dataSource: [
-                      {
-                        "display": "Płatność na miejscu",
-                        "value": "na_miejscu",
-                      },
-                      {
-                        "display": "Płatność punktami",
-                        "value": "punktami",
-                      },
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Za zamówienie otrzymasz:  ${_addPoints ? cart.countStars() : "0"}',
+                        textAlign: TextAlign.justify,
+                        style: textStyle,
+                      ),
+                      Icon(
+                        Icons.favorite,
+                        color: AppColors.red,
+                      )
                     ],
-                    textField: 'display',
-                    valueField: 'value',
                   ),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: showBasedOnInput(user.points, cart),
-          ),
-//          RaisedButton(
-//            child: Text(_myActivity == 'na_miejscu' ? 'Zamawiam' : 'Zapłać'),
-//            onPressed: _canPay
-//                ? () {
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: Text(
+                    'Aktualnie płatność możliwa jest za pomocą zebranych punktów lub przy płatności na miejscu.',
+                    textAlign: TextAlign.justify,
+                    style: textStyle,
+                  ),
+                ),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 16, bottom: 4, left: 16, right: 16),
+                        child: TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            hintText: 'Dodaj uwagi dotyczące zamówienia',
+                          ),
+                          maxLength: 255,
+                          minLines: 1,
+                          maxLines: 5,
+                          onChanged: (value) {
+                            _infoAboutOrder = value;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        child: DropDownFormField(
+                          titleText: 'Płatność',
+                          hintText: _myActivity == ''
+                              ? 'Proszę wybrać jedną'
+                              : _myActivity,
+                          value: _myActivity,
+                          onSaved: (value) {
+                            setState(() {
+                              _myActivity = value;
+                            });
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _myActivity = value;
+                            });
+                            if (value == 'punktami') {
+                              setState(() {
+                                _addPoints = false;
+                              });
+                            }
+                            if (value == 'na_miejscu') {
+                              setState(() {
+                                _addPoints = true;
+                                _canPay = true;
+                              });
+                            }
+                          },
+                          dataSource: [
+                            {
+                              "display": "Płatność na miejscu",
+                              "value": "na_miejscu",
+                            },
+                            {
+                              "display": "Płatność punktami",
+                              "value": "punktami",
+                            },
+                          ],
+                          textField: 'display',
+                          valueField: 'value',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                  child: showBasedOnInput(user.points, cart),
+                ),
+                RaisedButton(
+                  child:
+                      Text(_myActivity == 'na_miejscu' ? 'Zamawiam' : 'Zapłać'),
+                  onPressed: _canPay
+                      ? () {
+                          var price = cart.sum().toStringAsFixed(2) + ' zł';
+                          var points = cart.countStars();
+                          if (_myActivity == 'punktami') {
+                            price = (-cart.countStars() * 10).toString();
+                            points = 0;
+                          }
+                          if (_checkIfItemsNotAvaliable(
+                              menuItems, cartList, cart, context)) {
+                            Future processing = DatabaseService(uid: user.uid)
+                                .createNewOrder(
+                                    user.uid,
+                                    cart.cartItems,
+                                    _myActivity,
+                                    price,
+                                    points,
+                                    _infoAboutOrder);
+                            if (processing != null) {
+                              Toast.show(
+                                  'Zamówienie zostało złożone. Sprawdź jego stan w zakładce Zamówienia.',
+                                  context,
+                                  duration: Toast.LENGTH_LONG,
+                                  gravity: Toast.BOTTOM);
+                              cart.emptyCart();
+                              var nav = Navigator.of(context);
+                              nav.pop();
+                              nav.pop();
+                            }
+                          } else {
+                            setState(() {
+                              _canPay = false;
+                            });
+                          }
+                        }
+                      : null,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+//          _canPay
+//              ? SliderButton(
+//                  action: () {
 //                    var price = cart.sum().toStringAsFixed(2) + ' zł';
 //                    var points = cart.countStars();
 //                    if (_myActivity == 'punktami') {
 //                      price = (-cart.countStars() * 10).toString();
 //                      points = 0;
 //                    }
-//                    Future processing = DatabaseService(uid: user.uid)
-//                        .createNewOrder(user.uid, cart.cartItems, _myActivity,
-//                            price, points, _infoAboutOrder);
-//                    if (processing != null) {
-//                      Toast.show(
-//                          'Zamówienie zostało złożone. Sprawdź jego stan w zakładce Zamówienia.',
-//                          context,
-//                          duration: Toast.LENGTH_LONG,
-//                          gravity: Toast.BOTTOM);
-//                      cart.emptyCart();
-//                      var nav = Navigator.of(context);
-//                      nav.pop();
-//                      nav.pop();
+//                    if (_checkIfItemsNotAvaliable(menuItems, cartList, cart, context)) {
+//                      Future processing = DatabaseService(uid: user.uid)
+//                          .createNewOrder(user.uid, cart.cartItems, _myActivity,
+//                          price, points, _infoAboutOrder);
+//                      if (processing != null) {
+//                        Toast.show(
+//                            'Zamówienie zostało złożone. Sprawdź jego stan w zakładce Zamówienia.',
+//                            context,
+//                            duration: Toast.LENGTH_LONG,
+//                            gravity: Toast.BOTTOM);
+//                        cart.emptyCart();
+//                        var nav = Navigator.of(context);
+//                        nav.pop();
+//                        nav.pop();
+//                      }
+//                    } else {
+//                      print('Test');
 //                    }
-//                  }
-//                : null,
-//          ),
-          SizedBox(
-            height: 20.0,
+//                  },
+//                  label: Text(
+//                    'Przesuń, żeby zamówić',
+//                    style: TextStyle(
+//                        color: Color(0xff4a4a4a),
+//                        fontWeight: FontWeight.w500,
+//                        fontSize: 17),
+//                  ),
+//                  icon: Icon(
+//                    Icons.payment,
+//                    color: Colors.white,
+//                  ),
+//                  width: MediaQuery.of(context).size.width - 60,
+//                  buttonColor: Color(0xFF00704A),
+//                  backgroundColor: Color(0xFFDFECE8),
+//                  highlightedColor: Colors.white,
+//                  boxShadow: BoxShadow(color: Colors.white),
+//                )
+//              : SizedBox.shrink(),
+                SizedBox(
+                  height: 50.0,
+                ),
+              ],
+            ),
           ),
-          _canPay
-              ? SliderButton(
-                  action: () {
-                    var price = cart.sum().toStringAsFixed(2) + ' zł';
-                    var points = cart.countStars();
-                    if (_myActivity == 'punktami') {
-                      price = (-cart.countStars() * 10).toString();
-                      points = 0;
-                    }
-                    Future processing = DatabaseService(uid: user.uid)
-                        .createNewOrder(user.uid, cart.cartItems, _myActivity,
-                            price, points, _infoAboutOrder);
-                    if (processing != null) {
-                      Toast.show(
-                          'Zamówienie zostało złożone. Sprawdź jego stan w zakładce Zamówienia.',
-                          context,
-                          duration: Toast.LENGTH_LONG,
-                          gravity: Toast.BOTTOM);
-                      cart.emptyCart();
-                      var nav = Navigator.of(context);
-                      nav.pop();
-                      nav.pop();
-                    }
-                  },
-                  label: Text(
-                    'Przesuń, żeby zamówić',
-                    style: TextStyle(
-                        color: Color(0xff4a4a4a),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17),
-                  ),
-                  icon: Icon(
-                    Icons.payment,
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width - 60,
-                  buttonColor: Color(0xFF00704A),
-                  backgroundColor: Color(0xFFDFECE8),
-                  highlightedColor: Colors.white,
-                  boxShadow: BoxShadow(color: Colors.white),
-                )
-              : SizedBox.shrink(),
-          SizedBox(
-            height: 50.0,
-          ),
-        ],
-      ),
+        ),
+      ],
     ));
   }
 
@@ -275,9 +305,10 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
       case 'na_miejscu':
         {
           return Text(
-              'Płatność gotówką lub kartą na miejscu. Klikając zamawiam'
+              'Płatność gotówką lub kartą na miejscu.\n\nKlikając zamawiam'
               ' zobowiązujesz się do zapłaty złożonego zamówienia. Odbiór zamówienia'
-              ' po okazaniu kodu w aplikacji.',
+              ' po okazaniu kodu QR w aplikacji.',
+              textAlign: TextAlign.justify,
               style: textStyle);
         }
         break;
@@ -346,6 +377,61 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
     return Text(
       'Masz za mało punktów by zrealizować to zamówienie',
       style: textStyle,
+    );
+  }
+
+  bool _checkIfItemsNotAvaliable(List<MenuItem> menuItems,
+      List<CartItem> cartItems, Cart cart, BuildContext context) {
+    bool goodToGo = true;
+    List<int> indexToDelete = [];
+    cartItems.forEach((cartItem) {
+      MenuItem correspondingItem =
+          menuItems.firstWhere((menuItem) => menuItem.name == cartItem.name);
+      if (!correspondingItem.avaliable) {
+        indexToDelete.add(cartItems.indexOf(cartItem));
+        print(correspondingItem);
+        goodToGo = false;
+      }
+    });
+    if (!goodToGo) {
+      indexToDelete.forEach((index) {
+        cart.delete(index);
+      });
+      _showOrderChangeDialog(
+          'Tylko nie to...',
+          'Jeden z twoich wybranych produktów niestety nie jest już dzisiaj dostępny :(',
+          context);
+    }
+    return goodToGo;
+  }
+
+  _showOrderChangeDialog(String title, String message, BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

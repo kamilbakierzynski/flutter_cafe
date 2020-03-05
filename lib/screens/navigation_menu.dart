@@ -44,9 +44,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
               fontSize: 40.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0),
-          colorLineSelected: Color(0xFFC52836),
+          colorLineSelected: Color(0xFF1E3932),
           selectedStyle: TextStyle(
-              color: Color(0xFFC52836),
+              color: Color(0xFF1E3932),
               fontSize: 40.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0),
@@ -80,9 +80,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   fontSize: 40.0,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.0),
-              colorLineSelected: Color(0xFFC52836),
+              colorLineSelected: Color(0xFF1E3932),
               selectedStyle: TextStyle(
-                  color: Color(0xFFC52836),
+                  color: Color(0xFF1E3932),
                   fontSize: 40.0,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.0),

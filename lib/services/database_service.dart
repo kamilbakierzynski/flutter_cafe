@@ -19,6 +19,9 @@ class DatabaseService {
   final CollectionReference ordersDataCollection =
       Firestore.instance.collection('orders');
 
+  final CollectionReference appDataCollection =
+      Firestore.instance.collection('app-data');
+
   Future createUserData(String name) async {
     return await userDataCollection.document(uid).setData({
       'name': name,
@@ -76,7 +79,9 @@ class DatabaseService {
           price: doc.data['price'] ?? [],
           size: doc.data['size'] ?? [],
           imgUrl: doc.data['imgUrl'] ?? '',
-          featured: doc.data['featured'] ?? false);
+          featured: doc.data['featured'] ?? false,
+          newItem: doc.data['newItem'] ?? false,
+          avaliable: doc.data['avaliable'] ?? true);
     }).toList();
   }
 

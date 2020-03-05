@@ -29,7 +29,7 @@ class _CartScreenState extends State<CartScreen> {
                     children: <Widget>[
                       Icon(
                         Icons.shopping_cart,
-                        size: 100.0,
+                        size: 50.0,
                         color: Color(0xFF068F60),
                       ),
                       SizedBox(
@@ -39,7 +39,7 @@ class _CartScreenState extends State<CartScreen> {
                         'Koszyk jest pusty',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 25.0,
+                            fontSize: 20.0,
                             color: Color(0xFF243F38)),
                       )
                     ],
@@ -57,8 +57,14 @@ class _CartScreenState extends State<CartScreen> {
                         itemBuilder: (BuildContext ctxt, int index) {
                           CartItem item = cartList[index];
                           return ListTile(
-                            title: Text(item.name, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.0),),
-                            subtitle: item.size == "" ? null : Text("${item.size}  ${item.milk}"),
+                            title: Text(
+                              item.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 20.0),
+                            ),
+                            subtitle: item.size == ""
+                                ? null
+                                : Text("${item.size}  ${item.milk}"),
                             leading: Container(
                                 decoration: BoxDecoration(
                                     color: Color(0xFF00704A),
@@ -76,9 +82,14 @@ class _CartScreenState extends State<CartScreen> {
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Text("${item.price.toStringAsFixed(2)} zł", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20.0),),
+                                Text(
+                                  "${item.price.toStringAsFixed(2)} zł",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20.0),
+                                ),
                                 IconButton(
-                                  icon: Icon(Icons.remove_circle_outline),
+                                  icon: Icon(Icons.remove_circle),
                                   onPressed: () {
                                     cart.delete(index);
                                   },
@@ -126,7 +137,10 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AuthConfirmOrderWrapper())),
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => AuthConfirmOrderWrapper())),
                         child: Container(
                           height: 60,
                           decoration: BoxDecoration(
@@ -134,14 +148,20 @@ class _CartScreenState extends State<CartScreen> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30.0))),
                           width: MediaQuery.of(context).size.width * 0.5,
-                          child: Center(
-                              child: Text(
-                            'Zamów',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                          Text(
+                            'Dalej',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.w700),
-                          )),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,)
+                            ],
+                          ),
                         ),
                       )
                     ],

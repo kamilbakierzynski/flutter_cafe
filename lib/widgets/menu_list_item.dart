@@ -5,8 +5,12 @@ import 'package:coffee_shop/models/menu_item_model.dart';
 import 'package:coffee_shop/screens/cart_screen.dart';
 import 'package:coffee_shop/screens/item_screen.dart';
 import 'package:coffee_shop/widgets/more_info_bottom_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
+
+import 'package:toast/toast.dart';
 
 class MenuListItem extends StatelessWidget {
   final MenuItem item;
@@ -23,35 +27,40 @@ class MenuListItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Container(
           height: 200,
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 65,
-                  top: 0.0,
-                  bottom: 10.0,
-                ),
-                child: GestureDetector(
-                  onTap: item.price.length > 1
-                      ? () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => ItemScreen(
-                                item: item,
-                              ),
-                            ),
-                          )
-                      : () {
-                          showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) {
-                                return MoreInfoSheetWidget(
-                                  name: item.name,
-                                  description: item.description,
-                                );
-                              });
-                        },
+          child: GestureDetector(
+            onTap: () {
+              if (item.avaliable) {
+                if (item.price.length > 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ItemScreen(
+                        item: item,
+                      ),
+                    ),
+                  );
+                } else {
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) {
+                        return MoreInfoSheetWidget(
+                          menuItem: item,
+                          backgroundColor: backgroundColor,
+                          complementaryColor: complementaryColor,
+                        );
+                      });
+                }
+              }
+            },
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 65,
+                    top: 0.0,
+                    bottom: 10.0,
+                  ),
                   child: Stack(
                     children: <Widget>[
                       Container(
@@ -88,7 +97,9 @@ class MenuListItem extends StatelessWidget {
                                                     .width -
                                                 170,
                                             child: AutoSizeText(
-                                              item.menuDescription,
+                                              item.avaliable
+                                                  ? item.menuDescription
+                                                  : 'WRACAM JUTRO!!!',
                                               style: TextStyle(
                                                   color: complementaryColor,
                                                   fontSize: 15.0,
@@ -144,92 +155,111 @@ class MenuListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 80.0, bottom: 40.0, left: 40.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 0.5,
-                              spreadRadius: 0.2,
-                              offset: Offset(0, 0))
-                        ]),
-                    width: 40,
-                    height: 40,
-                    child: IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: item.price.length > 1
-                          ? () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => ItemScreen(
-                                    item: item,
-                                  ),
-                                ),
-                              )
-                          : () {
-                              CartItem cartItem = CartItem(
-                                  name: item.name,
-                                  price: item.price[0],
-                                  size: '',
-                                  milk: '',
-                                  quantity: 1,
-                                  imgUrl: item.imgUrl);
-                              cart.add(cartItem);
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text('Dodano do koszyka'),
-                                duration: Duration(seconds: 1),
-                                action: SnackBarAction(
-                                  label: 'Koszyk',
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => CartScreen(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ));
-                            },
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 200, top: 75),
-                child: Container(
-                  height: 240,
-                  width: 240,
-                  child: Image.asset(
-                    item.imgUrl,
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-              ),
-              1 < 0
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 200),
+                item.avaliable
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            top: 80.0, bottom: 40.0, left: 40.0),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 0.5,
+                                      spreadRadius: 0.2,
+                                      offset: Offset(0, 0))
+                                ]),
+                            width: 40,
+                            height: 40,
+                            child: IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: item.price.length > 1
+                                  ? () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => ItemScreen(
+                                            item: item,
+                                          ),
+                                        ),
+                                      )
+                                  : () {
+                                      CartItem cartItem = CartItem(
+                                          name: item.name,
+                                          price: item.price[0],
+                                          size: '',
+                                          milk: '',
+                                          quantity: 1,
+                                          imgUrl: item.imgUrl);
+                                      cart.add(cartItem);
+                                      Toast.show(
+                                          'Dodano do koszyka',
+                                          context,
+                                          duration: Toast.LENGTH_SHORT,
+                                          gravity: Toast.BOTTOM);
+                                    },
+                            )),
+                      )
+                    : SizedBox.shrink(),
+                Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 200, top: 75),
                       child: Container(
+                        height: 240,
+                        width: 240,
+                        child: item.avaliable
+                            ? Image.asset(
+                                item.imgUrl,
+                                fit: BoxFit.scaleDown,
+                              )
+                            : Image.asset(
+                                item.imgUrl,
+                                fit: BoxFit.scaleDown,
+                                color: Colors.black45,
+                              ),
+                      ),
+                    ),
+                    item.avaliable
+                        ? SizedBox.shrink()
+                        : Padding(
+                      padding: const EdgeInsets.only(left: 200, top: 125),
+                      child: Container(
+                        width: 110,
                         height: 25,
-                        width: 100,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20.0),
-                                bottomRight: Radius.circular(20.0))),
+                            borderRadius: BorderRadius.circular(10.0)),
                         child: Center(
                             child: Text(
-                          'NOWOSC',
-                          style: TextStyle(color: backgroundColor),
-                        )),
+                              'WYPRZEDANE',
+                              style: TextStyle(color: backgroundColor),
+                            )),
                       ),
-                    )
-                  : SizedBox.shrink()
-            ],
+                    ),
+                  ],
+                ),
+                item.newItem
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 200),
+                        child: Container(
+                          height: 25,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0))),
+                          child: Center(
+                              child: Text(
+                            'NOWOŚĆ',
+                            style: TextStyle(color: backgroundColor),
+                          )),
+                        ),
+                      )
+                    : SizedBox.shrink()
+              ],
+            ),
           )),
     );
   }

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:coffee_shop/models/cart_model.dart';
 import 'package:coffee_shop/models/cart_item_model.dart';
 import 'package:coffee_shop/models/menu_item_model.dart';
-import 'package:coffee_shop/shared/data.dart';
+import 'package:coffee_shop/models/app_data_model.dart';
 import 'package:coffee_shop/widgets/animations/animated_count.dart';
 import 'package:coffee_shop/widgets/more_info_bottom_card.dart';
 import 'package:coffee_shop/utils/negative_radius_painter.dart';
@@ -20,10 +20,10 @@ class ItemScreen extends StatefulWidget {
 }
 
 class _ItemState extends State<ItemScreen> {
-  String dropdownSize = AppData.sizes.first;
+  String dropdownSize = AppData.sizesStatic.first;
   int dropdownSizeIndex = 0;
 
-  String dropdownMilk = AppData.milks.first;
+  String dropdownMilk = AppData.milksStatic.first;
   int dropdownMilkIndex = 0;
 
   int counter = 1;
@@ -49,7 +49,7 @@ class _ItemState extends State<ItemScreen> {
     final Cart cart = Provider.of<Cart>(context);
 
     price = widget.item.price[dropdownSizeIndex];
-    calculatedPrice = (price + AppData.milkPrices[dropdownMilkIndex]) * counter;
+    calculatedPrice = (price + AppData.milkPricesStatic[dropdownMilkIndex]) * counter;
     return Scaffold(
       backgroundColor: Color(0xFFFBFAFB),
       body: Column(
@@ -155,8 +155,10 @@ class _ItemState extends State<ItemScreen> {
                                   backgroundColor: Colors.transparent,
                                   builder: (context) {
                                     return MoreInfoSheetWidget(
-                                      name: widget.item.name,
-                                      description: widget.item.description,
+                                      menuItem: widget.item,
+                                      complementaryColor: Color(0xFF00704A),
+                                      backgroundColor: Color(0xFF1E3932),
+
                                     );
                                   });
                             },
@@ -283,10 +285,10 @@ class _ItemState extends State<ItemScreen> {
                                             setState(() {
                                               dropdownSize = value;
                                               dropdownSizeIndex =
-                                                  AppData.sizes.indexOf(value);
+                                                  AppData.sizesStatic.indexOf(value);
                                             });
                                           },
-                                          items: AppData.sizes
+                                          items: AppData.sizesStatic
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
                                             return DropdownMenuItem<String>(
@@ -332,10 +334,10 @@ class _ItemState extends State<ItemScreen> {
                                             setState(() {
                                               dropdownMilk = value;
                                               dropdownMilkIndex =
-                                                  AppData.milks.indexOf(value);
+                                                  AppData.milksStatic.indexOf(value);
                                             });
                                           },
-                                          items: AppData.milks
+                                          items: AppData.milksStatic
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
                                             return DropdownMenuItem<String>(

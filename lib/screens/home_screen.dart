@@ -1,6 +1,6 @@
 import 'package:coffee_shop/models/cart_model.dart';
 import 'package:coffee_shop/shared/colors.dart';
-import 'package:coffee_shop/shared/data.dart';
+import 'package:coffee_shop/models/app_data_model.dart';
 import 'package:coffee_shop/widgets/nav_app_bars/custom_app_bar.dart';
 import 'package:coffee_shop/utils/disable_list_glow.dart';
 import 'package:coffee_shop/widgets/loading.dart';
@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
-                                              AppData.menuCategories[index],
+                                              AppData.menuCategoriesStatic[index],
                                               style: selectedCategory == index
                                                   ? TextStyle(
                                                       color: Color(0xFF00704A),
@@ -142,16 +142,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius.circular(
                                                                 10.0)),
                                                   )
-                                                : Container(
-                                                    width: 7,
-                                                    height: 7,
-                                                  )
+                                          : SizedBox.shrink()
                                           ],
                                         )),
                                   )),
                                 ),
                               );
-                            }, childCount: AppData.menuCategories.length),
+                            }, childCount: AppData.menuCategoriesStatic.length),
                           )
                         ],
                       ),

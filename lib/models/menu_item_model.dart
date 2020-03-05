@@ -7,6 +7,8 @@ class MenuItem {
   final List<dynamic> size;
   final String imgUrl;
   final bool featured;
+  final bool newItem;
+  final bool avaliable;
 
   MenuItem({
     this.category,
@@ -17,6 +19,8 @@ class MenuItem {
     this.size,
     this.imgUrl,
     this.featured,
+    this.newItem,
+    this.avaliable
   });
 }
 

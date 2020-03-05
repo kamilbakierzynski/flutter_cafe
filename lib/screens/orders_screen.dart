@@ -25,7 +25,7 @@ class OrdersScreen extends StatelessWidget {
                       children: <Widget>[
                         Icon(
                           Icons.store,
-                          size: 100.0,
+                          size: 50.0,
                           color: Color(0xFF068F60),
                         ),
                         SizedBox(
@@ -35,7 +35,7 @@ class OrdersScreen extends StatelessWidget {
                           'Nie masz zamówień :(',
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 25.0,
+                              fontSize: 20.0,
                               color: Color(0xFF243F38)),
                         )
                       ],
@@ -254,6 +254,11 @@ class OrdersScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     RaisedButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      elevation: 5,
+                                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
                                       onPressed: () {
                                         showModalBottomSheet(
                                             context: context,
@@ -261,12 +266,13 @@ class OrdersScreen extends StatelessWidget {
                                             builder: (context) {
                                               return QrCodeSheetWidget(
                                                   order.orderId,
-                                                  order.customer);
+                                                  order.customer,
+                                                  prettifyState(order.state));
                                             });
                                       },
                                       child: SizedBox(
-                                        height: 30,
-                                        width: 30,
+                                        height: 35,
+                                        width: 35,
                                         child: Image.asset(
                                           'assets/images/qrCodeIcon.png',
                                           fit: BoxFit.fitWidth,
