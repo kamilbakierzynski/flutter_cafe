@@ -34,7 +34,6 @@ dependencies:
   dropdown_formfield: ^0.1.1
   shortid: ^0.1.1
   toast: ^0.1.5
-  slider_button: ^0.4.0
   animations: ^1.0.0+5
 
 

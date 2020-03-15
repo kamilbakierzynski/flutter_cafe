@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:toast/toast.dart';
-import 'package:slider_button/slider_button.dart';
 
 class ConfirmOrderScreen extends StatefulWidget {
   @override
