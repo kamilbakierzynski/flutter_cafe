@@ -5,15 +5,19 @@ This project is a fully working solution for small cafes. It was made from scrat
 ## Features
 
  - **Firebase Database and Authentication**
+ 
 	*Data is stored in the cloud and dynamically updated. You can disable the item and make it 'out of stock' or label it 'NEW'. Every item can be displayed in a special category 'Featured for today'. Customers can register in the app to collect points and order goods. To view the menu you don't have to have an account.*
 	
 - **Points**
+
 	*Users can collect points for buying something in the Cafe. You can add points using special Admin App by scanning the generated QR code.*
 	
 - **Orders**
+
 	*Users can add items from the list to cart and then pay by cash (when collecting), or by points collected earlier. Orders are saved on the server side for history preview. You can collect the order by showing the special QR code generated for this order.*
 	
 - **Notifications**
+
 	*Notifications can be displayed when the order status changes.*
 
 ## Used technologies
