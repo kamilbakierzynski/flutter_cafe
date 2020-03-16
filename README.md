@@ -1,6 +1,6 @@
 
 # Mobile App for Cafe
-This project is a fully working solution for small cafes. It was made from scratch during my learning process of Flutter. The design is by [Polina Todorova](https://dribbble.com/tpdesigned) for [StanVision](https://dribbble.com/stanvision) and was uploaded to Dribbble.com. I don't own the design. The app can be used to let the users order and collect items on site, collect points and use them for free coffees etc.
+This project is a fully working solution for small cafes. It was made from scratch during my learning process of Flutter. The design is by [Polina Todorova](https://dribbble.com/tpdesigned) for [StanVision](https://dribbble.com/stanvision) and was uploaded to [Dribbble.com](https://dribbble.com). I don't own the design. The app can be used to let the users order and collect items on site, collect points and use them for free coffees etc.
 
 ## Features
 
@@ -40,3 +40,4 @@ This project is a fully working solution for small cafes. It was made from scrat
 - [Short readable id](https://pub.dev/packages/short_readable_id)
 - [Toast](https://pub.dev/packages/toast)
 plus all the Firebase Plugins.
+
