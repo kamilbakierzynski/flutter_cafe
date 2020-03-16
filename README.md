@@ -43,5 +43,6 @@ This project is a fully working solution for small cafes. It was made from scrat
 - [Dropdown form field](https://pub.dev/packages/dropdown_formfield)
 - [Short readable id](https://pub.dev/packages/short_readable_id)
 - [Toast](https://pub.dev/packages/toast)
+
 plus all the Firebase Plugins.
 
